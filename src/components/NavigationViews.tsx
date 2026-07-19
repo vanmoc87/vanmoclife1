@@ -490,6 +490,126 @@ export const ThuVienTriThucView: React.FC<NavigationViewsProps> = () => {
       van_moc: "Thương hiệu cá nhân bền vững nhất chính là sự chân thật không gồng gánh. Khi bạn là chính mình một cách trọn vẹn và cống hiến giá trị thực, thương hiệu tự khắc tỏa hương.",
       exercise: "Xác định 3 thông điệp hoặc giá trị cốt lõi mà bạn muốn mọi người nhớ đến đầu tiên khi nhắc về tên bạn.",
       tags: ["Personal Branding", "Thương hiệu cá nhân", "Sự nhất quán", "Chân thật"]
+    },
+    {
+      id: "su_nghiep_su_menh",
+      title: "Sự nghiệp & Sứ mệnh (Career & Mission)",
+      category: "career",
+      summary: "Sự nghiệp không chỉ là công việc mưu sinh, mà là một hành trình sứ mệnh thiêng liêng đòi hỏi con người bồi dưỡng, học tập và thăng tiến tâm thức từng ngày. Đây là một trong sáu đại mục tiêu lớn nhất của cuộc đời — bên cạnh Gia đình, Công danh, Tiền tài, Lý tưởng và Mối quan hệ — tạo nên sự dung hợp hoàn mỹ trong một kiếp nhân sinh toàn vẹn.",
+      psychology: "Dưới lăng kính Tâm lý học sâu sắc, sự nghiệp chính là con đường hiện thực hóa bản thể độc bản (Self-Actualization). Công việc hằng ngày là chiếc gương phản chiếu chân thực nhất thế giới vô thức bên trong, giúp ta nhận diện và chuyển hóa các tổn thương bản ngã. Khi tâm lý được chữa lành và thiết lập một trục 'tiếp đất' (Grounding) vững chãi, sự nghiệp không còn là gánh nặng mưu sinh mệt mỏi, mà trở thành không gian chánh niệm và thực hành sự kiên cường tinh thần.",
+      coaching: "Trong nghệ thuật Khai vấn (Coaching), sự nghiệp được định hình dựa trên triết lý Ikigai (Lẽ sống độc bản) — điểm giao thoa hoàn hảo giữa điều bạn yêu thích, năng lực vượt trội của bạn, nhu cầu thiết thực của xã hội và nguồn tài chính gieo duyên bền vững. Coaching giúp bạn chấm dứt tư duy đổ lỗi hoàn cảnh, dám chịu trách nhiệm 100% để thiết lập ranh giới lành mạnh và chủ động kiến tạo lộ trình công danh đi liền với bình an tự tại.",
+      numerology: "Thần số học học thuật nhìn nhận sự nghiệp như một Bản đồ trường rung động sinh học tự nhiên (qua chỉ số Bài học đường đời, Sứ mệnh và Trưởng thành). Từ bỏ tư duy bói toán mê tín, chúng ta thấu hiểu các đỉnh cao năng lượng và vùng số thiếu như những bài tập rèn luyện tâm thức để từ đó thiết lập những nếp sống kỷ luật, liên tục rèn giũa thói quen tự chủ hằng ngày nhằm biến thử thách số mệnh thành trí tuệ vượt bậc.",
+      van_moc: "Vân Mộc nhìn nhận Sự nghiệp là tiến trình tích hợp hài hòa của 'Bánh Xe Lục Đại' (Sự nghiệp - Gia đình - Công danh - Tiền tài - Lý tưởng - Mối quan hệ). Sự nghiệp chân thật không được đo lường bằng danh hiệu ảo vọng hay số dư tài khoản, mà bằng chiều sâu nhận thức, tính tôn nghiêm bản thân và giá trị nhân văn cao đẹp ta âm thầm cống hiến để nâng đỡ, thấu cảm và gieo duyên lành cho nhân sinh mỗi ngày.",
+      exercise: "1. Tự vấn về sự cân bằng của 6 đại mục tiêu đời người: Bạn có đang hy sinh Gia đình hay Mối quan hệ cho Tiền tài, hay đang đánh mất Lý tưởng sống?\n2. Viết ra 3 giá trị nhân văn mà bạn muốn cống hiến thông qua chuyên môn của mình.\n3. Thiết lập 1 thói quen rèn luyện tự học 15 phút mỗi ngày để nâng cấp năng lực bản thân một cách bền bỉ.",
+      tags: ["Sự nghiệp", "Sứ mệnh", "Ikigai", "6 Đại Mục Tiêu", "Kiến tạo bản thể"]
+    },
+    {
+      id: "so_1_tien_phong",
+      title: "Con số chủ đạo 1: Ý chí Khởi đầu & Bản lĩnh Tiên phong",
+      category: "numerology",
+      summary: "Đại diện cho xung lực đầu tiên khai mở vạn vật, tinh thần dũng cảm, khả năng độc lập tự quyết và phẩm chất của một người dẫn đường đầy bản lĩnh.",
+      psychology: "Dưới lăng kính tâm lý học, số 1 gắn liền với tiến trình cá nhân hóa sâu sắc (Individuation). Năng lượng này thôi thúc một người bước ra khỏi sự đồng hóa vô thức với đám đông để tìm kiếm và định hình căn tính độc bản. Sức mạnh của số 1 giúp cá nhân vượt qua hội chứng sợ bị cô lập, dám bước đi trên hành trình riêng biệt bằng niềm tin tự tôn vững chãi.",
+      coaching: "Trong khai vấn đồng hành, hành giả mang năng lượng số 1 cần học bài học chuyển dịch trọng tâm: từ 'lãnh đạo áp đặt' sang 'lãnh đạo thấu cảm'. Thách thức lớn nhất là thuần hóa cái tôi kiêu hãnh bản ngã, học cách gieo niềm tin và kiên nhẫn bồi dưỡng thế hệ kế cận thay vì gánh vác mọi việc một mình.",
+      numerology: "Tần số rung động của số 1 là bước sóng thẳng đứng, dứt khoát và nhanh. Liên đới mật thiết với luân xa Gốc rễ (Root Chakra) - cội nguồn của sự sinh tồn vững chãi và năng lực tiếp đất. Mang biểu tượng Thái Dương (Mặt Trời) - nguồn năng lượng hướng tâm, tự phát sáng và ban rải sự sống.",
+      van_moc: "Vân Mộc nhìn nhận Số 1 là hạt mầm quả cảm tự nứt vỏ trong lòng đất tối tăm để vươn thẳng lên đón ánh mặt trời. Bản lĩnh của số 1 không nằm ở sự cô độc ngạo nghễ, mà ở tinh thần trách nhiệm 100% với từng quyết định và khả năng bảo vệ ranh giới tôn nghiêm của bản thân trước mọi áp lực bên ngoài.",
+      exercise: "1. Nhận diện sự phụ thuộc: Viết xuống một dự định bạn hằng mong muốn nhưng chưa dám làm vì sợ ý kiến của người khác. Lập kế hoạch hành động tự quyết trong tuần này.\n2. Thực hành thế đứng 'Ngọn núi vững chãi' (Mountain Pose) trong 3 phút mỗi sáng để củng cố trục năng lượng tự tin nguyên bản.",
+      tags: ["Số 1", "Chủ đạo 1", "Tiên phong", "Ý chí", "Độc lập"]
+    },
+    {
+      id: "so_2_thau_cam",
+      title: "Con số chủ đạo 2: Dòng chảy Hòa hợp & Sự Thấu cảm sâu sắc",
+      category: "numerology",
+      summary: "Sức mạnh tĩnh lặng của khả năng lắng nghe tuyệt đối, sự nhạy bén cảm xúc, tinh thần hòa giải ngoại giao và năng lực kết nối tâm giao giữa người với người.",
+      psychology: "Tâm lý học tương tác định nghĩa số 2 như hiện thân của sự gắn kết an toàn (Secure Attachment). Người có năng lượng số 2 sở hữu trí tuệ cảm xúc (EQ) vượt trội, có khả năng thấu suốt những chuyển động tinh tế trong nội tâm đối phương, xoa dịu các xung đột bằng sự hiện diện mềm mại và dung chứa.",
+      coaching: "Bài học lớn nhất của số 2 trong tiến trình khai vấn là thiết lập ranh giới lành mạnh (Healthy Boundaries). Do quá nhạy cảm, số 2 dễ rơi vào hội chứng 'làm hài lòng người khác' (People-pleasing) và bị kiệt quệ năng lượng do gánh vác cảm xúc hộ người khác. Khai vấn giúp số 2 thấu hiểu rằng: yêu thương đích thực luôn cần đi kèm với sự tự chủ nghiêm cẩn.",
+      numerology: "Bước sóng của số 2 uốn lượn nhịp nhàng, mát lành và mang tính đón nhận sâu sắc. Tương thích với năng lượng Thái Âm (Mặt Trăng) và luân xa Xương cùng (Sacral Chakra) - trung tâm của cảm xúc chân thật, năng lực trực giác nhạy bén và tính sáng tạo nghệ thuật mềm mại.",
+      van_moc: "Vân Mộc xem Số 2 như dòng nước hiền hòa tự tìm đường luồn lách qua đá sỏi để nuôi dưỡng vạn vật mà không tranh giành cao thấp. Sự thấu cảm của Số 2 là liều thuốc chữa lành vô giá, nhưng dòng nước ấy cần được định hình bởi những ranh giới tôn nghiêm để không bị vẩn đục hay bốc hơi trước những năng lượng độc hại.",
+      exercise: "1. Thực hành Lắng nghe Chân chính (Deep Listening): Trong hôm nay, khi trò chuyện với ai đó, hãy im lặng hoàn toàn tâm trí, lắng nghe bằng cả trái tim mà không chuẩn bị sẵn ý kiến phản hồi.\n2. Thực hành nói từ chối nhẹ nhàng nhưng dứt khoát với một yêu cầu đang làm vắt kiệt thời gian hoặc sức khỏe của bạn.",
+      tags: ["Số 2", "Chủ đạo 2", "Thấu cảm", "Lắng nghe", "Hòa giải"]
+    },
+    {
+      id: "so_3_bieu_dat",
+      title: "Con số chủ đạo 3: Trí tuệ Biểu đạt & Sức lan tỏa Cảm hứng",
+      category: "numerology",
+      summary: "Năng lượng rực rỡ của ngôn từ khai sáng, tư duy nhanh nhạy, năng lực biểu đạt nghệ thuật phong phú và khả năng thắp sáng niềm vui sống cho cộng đồng.",
+      psychology: "Tâm lý học sáng tạo nhìn nhận số 3 là đỉnh cao của sự giải phóng bản ngã qua nghệ thuật và giao tiếp (Self-Expression). Việc bộc lộ cảm xúc và ý tưởng một cách chân thật giúp giải tỏa các khối ức chế tâm lý bị dồn nén, tái thiết lập dòng chảy năng lượng tích cực bên trong.",
+      coaching: "Trong coaching, hành giả số 3 cần rèn luyện tính tập trung và kỷ luật tự chủ để dòng chảy sáng tạo không bị phân tán vô tội vạ. Bài học cốt lõi là chuyển hóa ngôn từ và tài năng biểu diễn từ mục đích 'thu hút sự chú ý của bản ngã' sang mục tiêu 'lan tỏa giá trị nhân văn và đánh thức tâm thức người nghe'.",
+      numerology: "Tần số của số 3 có tính giãn nở, tươi vui và hướng ngoại. Kết nối mật thiết với luân xa Búi mặt trời (Solar Plexus Chakra) - trung tâm của lòng nhiệt huyết, tự tin hành động và năng lực lan tỏa thông điệp mạnh mẽ ra thế giới khách quan.",
+      van_moc: "Vân Mộc xem Số 3 là đóa hoa khoe sắc tỏa hương làm đẹp cho đời. Ngôn từ của số 3 có sức mạnh kiến tạo hoặc hủy diệt; do đó, hãy để lời nói của mình luôn đi qua ba cánh cổng gác nghiêm cẩn: Có chân thật không? Có tử tế không? Có mang lại giá trị nâng đỡ lúc này không?",
+      exercise: "1. Viết tự do (Free Writing): Dành 10 phút viết ra giấy mọi suy nghĩ trào dâng mà không chỉnh sửa ngữ pháp hay phán xét cảm xúc.\n2. Thực hành khen ngợi chân thành: Gửi một lời động viên sâu sắc bằng lời nói hoặc tin nhắn đến một người đang nỗ lực xung quanh bạn.",
+      tags: ["Số 3", "Chủ đạo 3", "Biểu đạt", "Sáng tạo", "Ngôn từ"]
+    },
+    {
+      id: "so_4_vung_chai",
+      title: "Con số chủ đạo 4: Nền tảng Vững chãi & Kỷ luật Thực tiễn",
+      category: "numerology",
+      summary: "Tần số của sự thực tế, tư duy logic hệ thống, sự trung thành tuyệt đối và năng lực hiện thực hóa các ý tưởng bay bổng thành các cấu trúc vật lý bền vững.",
+      psychology: "Tâm lý học hành vi xem năng lượng số 4 là nhu cầu thiết lập trật tự và sự an toàn cốt lõi (Structure & Stability). Việc duy trì các thói quen lành mạnh và một không gian sống ngăn nắp giúp xoa dịu hệ thần kinh giao cảm, tạo ra một 'neo giữ' vững chãi trước những biến động bên ngoài.",
+      coaching: "Trong hành trình khai vấn, thách thức lớn nhất của số 4 là vượt qua nỗi sợ mơ hồ và chủ nghĩa hoàn hảo cực đoan dẫn đến trì trệ hành động. Người mang số 4 cần học cách buông bỏ bớt sự kiểm soát cứng nhắc, rèn luyện tính linh hoạt để đón nhận những thay đổi bất ngờ của cuộc sống.",
+      numerology: "Đại diện cho hình vuông cân bằng vững vàng nhất, tương thích với năng lượng của Đất (Earth Element) và luân xa Gốc rễ. Đây là tần số ghim giữ chắc chắn, kéo tinh thần tiếp đất để xử lý các công việc thực tế một cách chỉn chu, khoa học.",
+      van_moc: "Vân Mộc trân quý Số 4 như gốc cổ thụ cắm sâu rễ vào lòng đất mẹ bao dung. Sự vững chãi, uy tín và tính cam kết bền bỉ của Số 4 chính là điểm tựa bình an cho gia đình và tổ chức, là tấm gương phản chiếu tinh thần làm việc nghiêm túc, tôn trọng sự thật.",
+      exercise: "1. Thiết lập thói quen kỷ luật: Chọn một hành động nhỏ (như uống nước ấm sau khi thức dậy hoặc thiền 5 phút) và thực hiện liên tục không ngắt quãng trong 21 ngày.\n2. Sắp xếp ngăn nắp: Dành 15 phút dọn dẹp tủ tài liệu hoặc bàn làm việc để tái thiết lập trật tự tâm trí.",
+      tags: ["Số 4", "Chủ đạo 4", "Kỷ luật", "Vững chãi", "Hệ thống"]
+    },
+    {
+      id: "so_5_tu_do",
+      title: "Con số chủ đạo 5: Tự do Nguyên bản & Thích thích Linh hoạt",
+      category: "numerology",
+      summary: "Tinh thần phiêu lưu không giới hạn, khát vọng tự do khám phá, năng lực thích ứng vượt trội trước đổi thay và tư duy đổi mới đầy tính đột phá.",
+      psychology: "Tâm lý học nhân văn gắn liền số 5 với nhu cầu tự quyết cao độ (Autonomy) và khao khát tích lũy trải nghiệm phong phú. Sự xê dịch lành mạnh và tiếp xúc đa chiều kích hoạt tính dẻo dai của não bộ (Neuroplasticity), mở rộng biên giới nhận thức và bẻ gãy các định kiến lối mòn.",
+      coaching: "Bài học lớn nhất của số 5 trong khai vấn là định nghĩa lại khái niệm 'tự do đích thực'. Tự do chân thật không phải là sự buông thả theo ham muốn bản năng hay trốn chạy các cam kết trách nhiệm, mà là năng lực tự chủ hoàn toàn trước những cám dỗ và lựa chọn sống có ý thức (Kỷ luật chính là tự do tối thượng).",
+      numerology: "Nằm ở vị trí trung tâm của biểu đồ số học, kết nối đa chiều. Tương thích với năng lượng của Gió - tự do, biến chuyển, lan tỏa thông tin nhanh chóng. Liên kết trực tiếp với luân xa Cổ họng (Throat Chakra) và luân xa Tim (Heart Chakra).",
+      van_moc: "Vân Mộc nhìn nhận Số 5 là cánh chim tự do sải cánh giữa bầu trời rộng lớn. Để cánh chim ấy bay cao mà không lạc lối giữa giông bão cuộc đời, số 5 cần một cái neo lý tưởng sống rõ ràng bên trong, biến mọi trải nghiệm xê dịch thành những bài học thấu cảm nhân sinh sâu sắc.",
+      exercise: "1. Thử thách phá vỡ lối mòn: Chọn một cung đường hoàn toàn mới để đi làm, hoặc thử trò chuyện với một người xa lạ để kích hoạt khả năng thích ứng linh hoạt.\n2. Tự phản tư: Viết ra những điều bạn đang muốn trốn tránh dưới danh nghĩa 'muốn tự do'.",
+      tags: ["Số 5", "Chủ đạo 5", "Tự do", "Thích ứng", "Trải nghiệm"]
+    },
+    {
+      id: "so_6_yeu_thuong",
+      title: "Con số chủ đạo 6: Yêu thương Vô điều kiện & Kiến tạo Tổ ấm",
+      category: "numerology",
+      summary: "Trái tim giàu lòng trắc ẩn, bản năng bảo bọc nuôi dưỡng, tinh thần gánh vác trách nhiệm gia đình cao cả và tài năng sáng tạo nghệ thuật hướng về tổ ấm bình an.",
+      psychology: "Tâm lý học gia đình kết nối số 6 với thiên chức nuôi dưỡng lành mạnh và nhu cầu xây dựng môi trường an toàn cảm xúc. Sức mạnh của số 6 giúp chữa lành tổn thương đứa trẻ bên trong thông qua sự ôm ấp, bao dung vô điều kiện và cảm giác được thuộc về.",
+      coaching: "Bài học cốt lõi trong tiến trình khai vấn của số 6 là học cách 'yêu thương trong tỉnh thức'. Người mang số 6 cần vượt qua hội chứng lo lắng thái quá, kiểm soát hoặc can thiệp sâu sắc vào tiến trình của người thân dưới danh nghĩa tình thương. Hãy học cách buông bỏ bớt kỳ vọng, để người thương tự chịu trách nhiệm với bài học cuộc đời của họ.",
+      numerology: "Tần số của số 6 là bước sóng rung động ấm áp, dung chứa và có khả năng xoa dịu cao độ. Tương thích hoàn hảo với luân xa Tim (Heart Chakra) - trung tâm của lòng trắc ẩn, tình yêu thương nhân loại và khả năng tự chữa lành tự nhiên.",
+      van_moc: "Vân Mộc xem Số 6 là ngọn lửa sưởi ấm căn bếp của mỗi ngôi nhà, là điểm tựa an lành nâng đỡ những tâm hồn mỏi mệt quay về. Tình yêu của Số 6 chỉ thực sự trọn vẹn khi nó đi kèm với sự thấu suốt và trí tuệ, yêu thương bằng sự tôn trọng tự do của đối phương.",
+      exercise: "1. Thực hành nuôi dưỡng: Dành thời gian chăm sóc một nhành cây, nấu một bữa ăn lành ấm áp và gửi trọn sự chú tâm vào từng hành động.\n2. Thiền rải tâm từ (Metta Meditation): Nhắm mắt và thầm gửi những lời chúc bình an, hạnh phúc đến bản thân và những người bạn yêu thương trong 5 phút.",
+      tags: ["Số 6", "Chủ đạo 6", "Yêu thương", "Nuôi dưỡng", "Gia đình"]
+    },
+    {
+      id: "so_7_tri_tue",
+      title: "Con số chủ đạo 7: Chiêm nghiệm Độc lập & Khai mở Tâm thức",
+      category: "numerology",
+      summary: "Hành trình của một nhà triết học chiêm nghiệm sâu sắc, khao khát tự học hỏi và thấu suốt chân lý cuộc đời thông qua trải nghiệm thực chứng tự thân.",
+      psychology: "Tâm lý học chiều sâu đánh giá cao năng lực phản tư (Self-Reflection) và tư duy độc lập của số 7. Việc chủ động dành thời gian ở một mình giúp bộ não của số 7 sàng lọc thông tin rác, chuyển hóa các bài học đau thương trong quá khứ thành những kho tàng trí tuệ thông thái.",
+      coaching: "Trong coaching, hành giả số 7 cần học cách vượt qua rào cản của sự hoài nghi quá mức, chủ nghĩa cô độc cực đoan hay tính phán xét lạnh lùng. Thách thức lớn là học cách đưa tri thức từ tầng lý thuyết cao siêu xuống ứng dụng thực tế đời sống, kết nối thấu cảm rộng mở với thế giới xung quanh.",
+      numerology: "Tần số của số 7 tương ứng với bước sóng tĩnh lặng, hướng nội sâu sắc. Kết nối trực tiếp với luân xa Con mắt thứ ba (Third Eye Chakra) về trực giác sắc bén và luân xa Vương miện (Crown Chakra) về sự thấu suốt tâm thức vượt bậc.",
+      van_moc: "Vân Mộc tôn quý Số 7 như ngọn nến sáng lặng lẽ ngự trị giữa màn đêm tĩnh lặng. Trí tuệ đích thực của Số 7 không đến từ sách vở lý thuyết suông, mà được kết tinh rực rỡ từ những biến cố, giông bão cuộc đời mà họ đã dũng cảm đối diện, tự chữa lành và vượt qua bằng nội lực tự chủ.",
+      exercise: "1. Thực hành Tĩnh lặng: Mỗi ngày dành ra 15 phút ngắt kết nối hoàn toàn với các thiết bị điện tử, ngồi tĩnh tâm quan sát hơi thở hoặc đi bộ chánh niệm dưới bóng cây.\n2. Viết nhật ký bài học: Chọn một khó khăn bạn đang gặp phải, viết xuống 3 bài học sâu sắc nhất mà biến cố này đang cố gắng dạy cho bạn.",
+      tags: ["Số 7", "Chủ đạo 7", "Chiêm nghiệm", "Trí tuệ", "Tự lực"]
+    },
+    {
+      id: "so_8_quan_tri",
+      title: "Con số chủ đạo 8: Quản trị Thịnh vượng & Cân bằng Nhân quả",
+      category: "numerology",
+      summary: "Ý chí kiên cường dời non lấp bể, năng lực điều hành hệ thống sắc bén, tư duy tài chính vượt trội và bài học cân bằng đỉnh cao giữa thế giới vật chất hữu hình và giá trị tâm linh vô hình.",
+      psychology: "Tâm lý học hành vi nhận định số 8 là biểu tượng bền bỉ của lòng kiên định vượt khó (Grit) và sự tự hiệu quả (Self-Efficacy). Sức mạnh ý chí của số 8 giúp cá nhân nhìn nhận các thất bại như những nấc thang rèn luyện bắt buộc để vươn tới sự trưởng thành.",
+      coaching: "Trong tiến trình khai vấn, thách thức lớn nhất của số 8 là học cách buông bỏ bớt sự ám ảnh về kiểm soát tài chính và quyền lực bản ngã. Số 8 cần rèn luyện lòng biết ơn sâu sắc, học cách kiến tạo dòng chảy tài chính thịnh vượng bền vững dựa trên mục tiêu phụng sự tử tế và nâng đỡ cộng đồng xung quanh.",
+      numerology: "Biểu tượng của số 8 là chiếc vòng vô cực (Infinity) xoay dọc, biểu thị dòng năng lượng tuần hoàn không dứt giữa thế giới vật chất và tinh thần. Vận hành dưới sự giám sát nghiêm cẩn của Luật Nhân Quả (Karma) tuyệt đối.",
+      van_moc: "Vân Mộc xem Số 8 là nhà quản trị thông tuệ biết cách hiện thực hóa các nguồn lực vũ trụ thành những giá trị vật chất vững chắc và an lành cho nhân sinh. Sự thịnh vượng đích thực của số 8 chỉ bền vững khi nó được xây dựng trên nền tảng đạo đức trong sạch, công tâm và hướng thiện.",
+      exercise: "1. Thực hành gieo hạt tài chính: Trích một phần nhỏ thu nhập hằng tháng gửi vào các quỹ gieo duyên lành một cách âm thầm, không mưu cầu danh tiếng.\n2. Thực hành lòng biết ơn: Viết xuống 5 điều bạn cảm thấy biết ơn về sự đủ đầy của cuộc sống vật chất hiện tại trước khi đi ngủ.",
+      tags: ["Số 8", "Chủ đạo 8", "Quản trị", "Nhân quả", "Thịnh vượng"]
+    },
+    {
+      id: "so_9_phung_su",
+      title: "Con số chủ đạo 9: Trái tim Nhân ái & Sứ mệnh Phụng sự",
+      category: "numerology",
+      summary: "Đỉnh cao tinh hoa của lòng vị tha vượt biên giới, lý tưởng sống vĩ mô, khát vọng cống hiến cho xã hội và sứ mệnh phụng sự nhân sinh bằng tình thương vô điều kiện.",
+      psychology: "Tâm lý học xã hội coi số 9 là biểu hiện rực rỡ nhất của hành vi vị xã hội (Altruism). Khi một cá nhân đặt cuộc đời mình vào một lý tưởng lớn lao hơn bản ngã nhỏ bé, họ sẽ giải phóng hoàn toàn nỗi sợ hãi tồn tại, đạt đến trạng thái hạnh phúc tự tại đích thực.",
+      coaching: "Bài học lớn nhất của số 9 trong khai vấn là học cách sống thực tế ('tiếp đất' - Grounding) và hoàn thành trọn vẹn những mục tiêu nhỏ trước mắt thay vì chìm đắm trong các lý tưởng vĩ cuồng xa vời. Hãy giúp đỡ một người cụ thể trước khi nghĩ đến việc giải cứu cả thế giới, và học cách tha thứ cho những khuyết điểm của bản thân.",
+      numerology: "Là con số kết thúc chu kỳ đơn số, tích hợp toàn bộ bài học và năng lượng của các con số đứng trước nó. Tương thích trực tiếp với luân xa Vương miện (Crown Chakra) - hướng về sự thức tỉnh tâm thức toàn vẹn và lòng bác ái bao la.",
+      van_moc: "Vân Mộc tôn quý Số 9 như ngọn hải đăng soi đường cho những mảnh đời lạc lối giữa đại dương giông bão tìm về bến đỗ bình an. Sứ mệnh tối hậu của Số 9 là sống cuộc đời phụng sự thầm lặng, lan tỏa hạt giống tử tế và lòng bao dung vô điều kiện đến mọi ngóc ngách của kiếp nhân sinh.",
+      exercise: "1. Thực hành buông bỏ oán giận: Viết một bức thư tha thứ sâu sắc cho một người từng làm tổn thương bạn sâu sắc (viết để giải phóng năng lượng oán giận bị dồn nén, không cần gửi đi).\n2. Gieo duyên tử tế: Thực hiện một hành động tử tế vô điều kiện (như giúp đỡ một cụ già qua đường, ủng hộ sách cũ) mà không cần ai biết đến.",
+      tags: ["Số 9", "Chủ đạo 9", "Nhân ái", "Phụng sự", "Tha thứ"]
     }
   ];
 

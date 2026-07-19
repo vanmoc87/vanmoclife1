@@ -119,6 +119,8 @@ export default function App() {
   const [orders, setOrders] = useState<any[]>([]);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
+  const [adminSavedPassword, setAdminSavedPassword] = useState("vanmoc2026");
+  const [newAdminPasswordInput, setNewAdminPasswordInput] = useState("");
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [editPaymentConfig, setEditPaymentConfig] = useState({
     bankId: "mbbank",
@@ -208,6 +210,11 @@ export default function App() {
       } catch (e) {
         console.error(e);
       }
+    }
+
+    const savedAdminPass = localStorage.getItem("van_moc_admin_password");
+    if (savedAdminPass) {
+      setAdminSavedPassword(savedAdminPass);
     }
 
     const savedEbookUnlocked = localStorage.getItem("van_moc_ebook_unlocked");
@@ -2486,19 +2493,6 @@ export default function App() {
               </button>
               <span className="text-stone-300 select-none">Vân Mộc Podcast</span>
             </div>
-
-            {/* Download Zip Project link */}
-            <div className="pt-4 flex flex-col items-start border-t border-stone-100">
-              <a
-                href="/api/download-zip"
-                download="du_an_van_moc.zip"
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-100 text-amber-800 hover:bg-[#5A5A40] hover:text-white hover:border-[#5A5A40] transition-all duration-300 text-[10px] uppercase tracking-wider font-bold shadow-xs"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Tải Toàn Bộ Dự Án (.ZIP)</span>
-              </a>
-              <span className="text-[9px] text-stone-400 mt-1 italic">Mã nguồn sẵn sàng để đẩy lên GitHub / Vercel</span>
-            </div>
           </div>
 
           {/* Right Column: Connection Channels */}
@@ -2978,7 +2972,7 @@ export default function App() {
                   </div>
                   <div>
                     <h4 className="font-serif font-bold text-sm text-stone-800">Xác thực quyền Quản trị</h4>
-                    <p className="text-xs text-stone-500 mt-1">Mật khẩu mặc định là <code className="bg-stone-100 px-1 py-0.5 rounded text-red-600 font-mono">admin</code></p>
+                    <p className="text-xs text-stone-500 mt-1">Vui lòng nhập mật khẩu Quản trị để thiết lập QR thanh toán &amp; quản lý đơn hàng gieo duyên.</p>
                   </div>
                   <input
                     type="password"
@@ -2987,7 +2981,7 @@ export default function App() {
                     onChange={(e) => setAdminPassword(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        if (adminPassword === "admin" || adminPassword === "") {
+                        if (adminPassword === adminSavedPassword) {
                           setIsAdminAuthenticated(true);
                         } else {
                           alert("Mật khẩu không chính xác.");
@@ -2998,7 +2992,7 @@ export default function App() {
                   />
                   <button
                     onClick={() => {
-                      if (adminPassword === "admin" || adminPassword === "") {
+                      if (adminPassword === adminSavedPassword) {
                         setIsAdminAuthenticated(true);
                       } else {
                         alert("Mật khẩu không chính xác.");
@@ -3101,6 +3095,58 @@ export default function App() {
                         >
                           Lưu cấu hình tài khoản
                         </button>
+                      </div>
+
+                      {/* THAY ĐỔI MẬT KHẨU QUẢN TRỊ */}
+                      <div className="border-t border-stone-200/60 pt-4 mt-6">
+                        <h5 className="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold mb-2">
+                          Thay đổi mật khẩu quản trị
+                        </h5>
+                        <p className="text-[11px] text-stone-400 mb-2 leading-relaxed">
+                          Mật khẩu bảo mật hiện tại đang hoạt động trên trình duyệt này. Nhập mật khẩu mới bên dưới để cập nhật bảo mật cho hệ thống quản trị của bạn.
+                        </p>
+                        <div className="flex gap-2 max-w-md">
+                          <input
+                            type="password"
+                            placeholder="Mật khẩu mới..."
+                            value={newAdminPasswordInput}
+                            onChange={(e) => setNewAdminPasswordInput(e.target.value)}
+                            className="flex-1 px-3 py-2 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-1 focus:ring-[#5A5A40] bg-white text-stone-800"
+                          />
+                          <button
+                            onClick={() => {
+                              if (!newAdminPasswordInput.trim()) {
+                                alert("Vui lòng nhập mật khẩu mới.");
+                                return;
+                              }
+                              localStorage.setItem("van_moc_admin_password", newAdminPasswordInput.trim());
+                              setAdminSavedPassword(newAdminPasswordInput.trim());
+                              setNewAdminPasswordInput("");
+                              alert("Đã thay đổi mật khẩu quản trị thành công!");
+                            }}
+                            className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors border border-stone-300/40 cursor-pointer"
+                          >
+                            Đổi mật khẩu
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* SAO LƯU TOÀN BỘ DỰ ÁN (CHỈ QUẢN TRỊ VIÊN) */}
+                      <div className="border-t border-stone-200/60 pt-4 mt-6">
+                        <h5 className="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold mb-1.5">
+                          Tải xuống mã nguồn dự án (.ZIP)
+                        </h5>
+                        <p className="text-[11px] text-stone-400 mb-2 leading-relaxed">
+                          Tải về bản sao lưu đầy đủ của mã nguồn trang web để dễ dàng xuất bản lên Vercel / GitHub hoặc lưu trữ dự phòng riêng tư.
+                        </p>
+                        <a
+                          href="/api/download-zip"
+                          download="du_an_van_moc.zip"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 hover:bg-[#5A5A40] hover:text-white hover:border-[#5A5A40] transition-all duration-300 text-[10px] uppercase tracking-wider font-bold shadow-xs"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>Tải Toàn Bộ Dự Án (.ZIP)</span>
+                        </a>
                       </div>
                     </div>
 
