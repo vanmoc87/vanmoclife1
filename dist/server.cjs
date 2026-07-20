@@ -36,6 +36,7 @@ var import_express = __toESM(require("express"), 1);
 var import_path = __toESM(require("path"), 1);
 var import_fs = __toESM(require("fs"), 1);
 var import_dotenv = __toESM(require("dotenv"), 1);
+var import_child_process = require("child_process");
 var import_vite = require("vite");
 var import_genai = require("@google/genai");
 import_dotenv.default.config();
@@ -378,6 +379,12 @@ app.post("/api/sheets/update-status", async (req, res) => {
   }
 });
 app.get("/api/download-zip", (req, res) => {
+  try {
+    console.log("Dynamically generating ZIP file before download...");
+    (0, import_child_process.execSync)("node generate-zip.js", { stdio: "inherit" });
+  } catch (zipErr) {
+    console.error("Error generating ZIP on-the-fly, serving existing zip if available:", zipErr);
+  }
   const zipPath = import_path.default.join(process.cwd(), "du_an_van_moc.zip");
   if (import_fs.default.existsSync(zipPath)) {
     res.download(zipPath, "du_an_van_moc.zip");

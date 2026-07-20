@@ -141,6 +141,34 @@ export default function App() {
   const [bottomRegCreatedOrderId, setBottomRegCreatedOrderId] = useState("");
   const [bottomRegShowSuccessScreen, setBottomRegShowSuccessScreen] = useState(false);
   const [isBottomRegOpen, setIsBottomRegOpen] = useState(false);
+  const [isDownloadingZip, setIsDownloadingZip] = useState(false);
+
+  const handleDownloadZip = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (isDownloadingZip) return;
+    setIsDownloadingZip(true);
+    
+    try {
+      const response = await fetch('/api/download-zip');
+      if (!response.ok) {
+        throw new Error('Không thể tạo hoặc tải file ZIP từ máy chủ');
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'du_an_van_moc.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Lỗi khi tải file ZIP:', error);
+      alert('Không thể tải file ZIP trực tiếp. Hãy thử mở ứng dụng trong một tab mới hoặc liên hệ quản trị viên.');
+    } finally {
+      setIsDownloadingZip(false);
+    }
+  };
 
   const handleBottomRegSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1235,7 +1263,7 @@ export default function App() {
                 </h1>
               </div>
               <p className="text-stone-700 leading-relaxed text-xs md:text-sm font-sans pr-4 space-y-4">
-                <span>Vân Mộc là hệ thống phát triển con người giúp bạn hiểu bản thân, chữa lành những khuôn mẫu cũ, xây dựng khí chất và sống đúng với giá trị của mình thông qua coaching, tâm lý học, thần số học và các công cụ phản tư.</span>
+                <span>Vân Mộc là hệ thống phát triển con người, đồng hành bằng sự lắng nghe, thấu hiểu và yêu thương, giúp mỗi người chuyển hóa từ bên trong để sống đúng với bản sắc của mình.</span>
               </p>
 
               {/* CTAs (ƯU TIÊN 1) */}
@@ -3139,14 +3167,14 @@ export default function App() {
                         <p className="text-[11px] text-stone-400 mb-2 leading-relaxed">
                           Tải về bản sao lưu đầy đủ của mã nguồn trang web để dễ dàng xuất bản lên Vercel / GitHub hoặc lưu trữ dự phòng riêng tư.
                         </p>
-                        <a
-                          href="/api/download-zip"
-                          download="du_an_van_moc.zip"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 hover:bg-[#5A5A40] hover:text-white hover:border-[#5A5A40] transition-all duration-300 text-[10px] uppercase tracking-wider font-bold shadow-xs"
+                        <button
+                          onClick={handleDownloadZip}
+                          disabled={isDownloadingZip}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 hover:bg-[#5A5A40] hover:text-white hover:border-[#5A5A40] disabled:opacity-50 transition-all duration-300 text-[10px] uppercase tracking-wider font-bold shadow-xs cursor-pointer"
                         >
-                          <Download className="w-3.5 h-3.5" />
-                          <span>Tải Toàn Bộ Dự Án (.ZIP)</span>
-                        </a>
+                          <Download className={`w-3.5 h-3.5 ${isDownloadingZip ? 'animate-spin' : 'animate-bounce'}`} />
+                          <span>{isDownloadingZip ? 'Đang nén dự án...' : 'Tải Toàn Bộ Dự Án (.ZIP)'}</span>
+                        </button>
                       </div>
                     </div>
 

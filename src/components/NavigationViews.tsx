@@ -253,10 +253,10 @@ export const VanMocMethodView: React.FC<NavigationViewsProps> = ({ setActiveTab,
         <div className="max-w-xl mx-auto z-10 relative space-y-4">
           <span className="text-[10px] uppercase tracking-widest font-mono text-amber-200 font-bold block">Tuyên ngôn triết lý</span>
           <h3 className="text-2xl md:text-3xl font-serif italic text-white font-normal leading-snug">
-            “Chúng tôi không thay đổi con người bạn. Chúng tôi giúp bạn nhìn thấy chính mình.”
+            “Sự chuyển hóa không bắt đầu khi có thêm lời khuyên. Sự chuyển hóa bắt đầu khi một con người nhìn rõ chính mình.”
           </h3>
           <p className="text-xs text-stone-400 leading-relaxed font-sans max-w-md mx-auto">
-            Học thuyết Vân Mộc nhấn mạnh việc thấu suốt bản ngã hằng ngày thông qua các công cụ phản tư. Chúng tôi biến đá quý, Reiki, Coaching, và Thần số học thành những công cụ soi chiếu nội tâm kỳ diệu.
+            Học thuyết Vân Mộc nhấn mạnh việc thấu suốt bản thân hằng ngày thông qua các công cụ phản chiếu nội tâm, khơi thông dòng chảy năng lượng giúp bạn tập trung cao độ trong học tập, công việc và tìm thấy sự bình an tự tại.
           </p>
         </div>
       </div>
@@ -1707,44 +1707,34 @@ export const AboutView: React.FC<NavigationViewsProps> = () => {
           <div className="space-y-1">
             <span className="text-[10px] uppercase tracking-wider font-bold text-[#5A5A40] font-serif italic">Khởi Nguồn Của Vân Mộc</span>
             <h3 className="text-2xl md:text-3xl font-serif text-stone-950 leading-snug font-normal">
-              Có những hành trình không bắt đầu từ thành công, mà bắt đầu từ <span className="italic text-[#5A5A40]">những lần vụn vỡ.</span>
+              Vân Mộc bắt đầu từ một câu hỏi: <span className="italic text-[#5A5A40]">Điều gì thực sự giúp một con người thay đổi?</span>
             </h3>
           </div>
 
           <div className="text-xs md:text-sm text-stone-700 leading-relaxed font-sans space-y-5">
             <p>
-              Vân Mộc không ra đời từ một kế hoạch kinh doanh được tính toán chi li, cũng không được tạo dựng bởi một đội ngũ chuyên gia ngay từ vạch xuất phát. Vân Mộc được phôi thai và sinh ra từ chính hành trình trải nghiệm, vấp ngã và tự cứu lấy mình của người sáng lập.
+              Có một thời gian, mình từng nghĩ rằng chỉ cần cố gắng hơn, mạnh mẽ hơn, hoặc học thêm nhiều kiến thức hơn thì mọi vấn đề rồi sẽ được giải quyết.
             </p>
             <p>
-              Đó là những năm tháng đi qua những vấp ngã sâu sắc trong tình cảm, những rạn nứt đau đớn trong các mối quan hệ, gánh nặng áp lực tài chính đè nặng, và cả những lần dốc lòng xây dựng để rồi chứng kiến mọi thứ đổ vỡ tan tành. Đã có những thời điểm mình hoàn toàn mất phương hướng, đánh mất niềm tin vào bản thân và cả cuộc sống này, chỉ biết ôm lấy bất lực và tự hỏi trong nước mắt: <em className="text-[#5A5A40] font-serif not-italic font-medium">"Vì sao mọi chuyện lại xảy ra với mình?"</em>
+              Nhưng cuộc sống đã dạy mình điều ngược lại.
             </p>
             <p>
-              Nhưng chính trong những khoảnh khắc cô độc ấy, khi càng đi tìm câu trả lời ở bên ngoài, mình càng nhận ra một sự thật rõ ràng: <strong className="text-stone-900">Gốc rễ của mọi vấn đề không nằm ở hoàn cảnh bên ngoài, mà nằm ở việc mình chưa thật sự thấu hiểu chính mình.</strong>
+              Có những vấn đề không thể giải quyết chỉ bằng sự cố gắng. Có những nỗi đau không biến mất chỉ vì thời gian trôi qua. Và cũng có những lần mình đi tìm câu trả lời ở khắp mọi nơi, để rồi nhận ra điều mình còn thiếu không phải là thêm một lời khuyên, mà là một sự thấu hiểu về chính mình.
             </p>
 
             <div className="p-4 bg-[#5A5A40]/5 border-l-2 border-[#5A5A40] rounded-r-2xl italic font-serif text-stone-800 my-4 text-xs md:text-sm">
-              Hành trình chuyển hóa thực sự chỉ bắt đầu khi ta can đảm quay về bên trong.
+              Sự chuyển hóa thực sự không bắt đầu khi chúng ta có thêm thật nhiều lời khuyên. Nó bắt đầu khi một con người đủ dũng cảm để nhìn rõ chính mình.
             </div>
 
             <p>
-              Và mình bắt đầu học. Học để hiểu thấu suốt về con người, học để gọi tên từng rung động của cảm xúc, học để nhìn ra những khuôn mẫu tâm lý vô thức đang âm thầm kéo lùi cuộc sống của mình suốt bấy lâu. 
+              Từ đó, mình bắt đầu học. Học để hiểu con người. Học để hiểu cảm xúc, suy nghĩ và những khuôn mẫu vô thức đang âm thầm chi phối cuộc sống của mỗi người.
             </p>
             <p>
-              Mình tìm đến <span className="text-[#5A5A40] font-semibold">Thần số học</span> như một chiếc gương soi chiếu để nhìn lại năng lượng cốt lõi của bản thân dưới một lăng kính mới bao dung hơn. Mình thực hành <span className="text-[#5A5A40] font-semibold">Reiki</span> để học cách lắng nghe, vỗ về và tự chăm sóc cho thân tâm mình. Mình đọc sâu về <span className="text-[#5A5A40] font-semibold">Tâm lý học</span>, phát triển bản thân và Khai vấn (Coaching) để thấu hiểu một chân lý sâu sắc: Mỗi trải nghiệm, dù đắng cay đến đâu, đều là một bài học thiêng liêng nếu ta biết nhìn nhận đúng cách.
+              Càng học, càng lắng nghe và trò chuyện với nhiều người, mình càng nhận ra một điều: Phía sau mỗi vấn đề về tài chính, hôn nhân, sự nghiệp hay các mối quan hệ, luôn có một câu chuyện sâu hơn đang chờ được lắng nghe.
             </p>
             <p>
-              Điều thay đổi hoàn toàn cuộc đời mình không phải là một phương pháp kỳ diệu, xa vời nào cả. Mà là khoảnh khắc mình dần thấu hiểu bản thân, dám thay đổi tư duy từ gốc rễ, tự chữa lành những khoảng trống tổn thương bên trong và bắt đầu chịu trách nhiệm 100% cho số phận của chính mình.
+              Đó cũng là lý do Vân Mộc được hình thành. Không phải để đưa ra câu trả lời thay ai. Mà để tạo nên một không gian, nơi mỗi người có thể dừng lại, lắng nghe chính mình, nhìn rõ bản chất của vấn đề và từng bước tìm thấy con đường phù hợp với cuộc đời của họ.
             </p>
-            <p>
-              Vân Mộc được tạo dựng từ chính niềm tin nguyên bản ấy. Giống như đóa sen thanh khiết vươn lên từ bùn lầy nhưng không hề mang theo mùi bùn, mình tin tưởng sâu sắc rằng mỗi con người đều mang trong mình khả năng chuyển hóa những vết thương thành nguồn sức mạnh nội sinh vô hạn, nếu được trao gửi đúng góc nhìn và đúng phương pháp rèn luyện.
-            </p>
-            <p>
-              Vân Mộc sẽ không hứa hẹn sẽ thay bạn giải quyết mọi vấn đề một cách thần tốc. Vân Mộc sinh ra để trở thành một người đồng hành thầm lặng, chân thành, giúp bạn thấu suốt bản thân, nhìn rõ những khuôn mẫu cũ đang lặp lại, nuôi dưỡng nội lực vững vàng để từng bước kiến tạo một cuộc sống tự chủ, đúng với giá trị đích thực của riêng mình.
-            </p>
-            
-            <div className="pt-4 font-serif text-stone-900 border-t border-stone-200 mt-6 italic font-medium text-sm md:text-base text-center lg:text-left">
-              “Khi một người thật sự hiểu mình, họ sẽ không còn đi tìm vận may ở bên ngoài, mà bắt đầu tự kiến tạo vận mệnh bằng những lựa chọn có ý thức mỗi ngày.”
-            </div>
           </div>
         </div>
 
@@ -1754,7 +1744,7 @@ export const AboutView: React.FC<NavigationViewsProps> = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full pointer-events-none"></div>
             <Sparkle className="w-8 h-8 text-amber-200 animate-pulse" />
             <h4 className="font-serif text-lg italic text-amber-100 leading-relaxed">
-              “Vân Mộc ra đời để giúp bạn đứng vững trên đôi chân của mình, sống bằng cốt cách thanh cao và bản sắc nguyên bản nhất.”
+              “Vân Mộc mong được lắng nghe và đồng hành cùng bạn trên hành trình hiểu mình, chuyển hóa và sống đúng với những giá trị của chính mình.”
             </h4>
             <div className="h-[1px] w-16 bg-white/20"></div>
             <p className="text-[11px] leading-relaxed opacity-90 font-mono">
@@ -1791,25 +1781,43 @@ export const AboutView: React.FC<NavigationViewsProps> = () => {
 
       </div>
 
-      {/* Touch of Soul Quote (Đoạn Tâm Đắc Cuối Trang Về Vân Mộc) */}
+      {/* Triết lý đồng hành của Vân Mộc (New Brand Philosophy & Manifesto) */}
       <div className="pt-12 border-t border-stone-200">
-        <div className="max-w-2xl mx-auto text-center space-y-6 py-10 px-6 md:px-12 bg-[#5A5A40]/5 rounded-3xl border border-[#5A5A40]/10 relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-[1px] bg-[#5A5A40]/30"></div>
+        <div className="max-w-3xl mx-auto space-y-8 py-12 px-6 md:px-12 bg-stone-900 text-stone-200 rounded-3xl relative overflow-hidden shadow-md">
+          <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+            <Compass className="w-80 h-80 translate-x-16 translate-y-16 text-white" />
+          </div>
           
-          <span className="text-[9px] uppercase tracking-widest font-bold text-[#5A5A40] bg-[#5A5A40]/10 px-3 py-1 rounded-full">Thông Điệp Từ Trái Tim</span>
-          
-          <div className="space-y-4 font-serif text-stone-800 leading-relaxed text-sm md:text-base md:leading-loose max-w-xl mx-auto italic font-medium">
-            <p>“Mình không ở đây vì chưa từng tổn thương.</p>
-            <p>Mình ở đây vì đã từng đi qua những tổn thương ấy.</p>
-            <p className="mt-4">Mình không ở đây để nói rằng cuộc sống sẽ không còn khó khăn.</p>
-            <p>Mình ở đây để chia sẻ rằng, khi hiểu bản thân đủ sâu, mỗi biến cố đều có thể trở thành một cánh cửa mở ra phiên bản trưởng thành hơn của chính mình.”</p>
+          <div className="text-center space-y-4 z-10 relative">
+            <span className="text-[10px] uppercase tracking-widest font-mono font-bold text-amber-200 bg-amber-950/40 px-3 py-1 rounded-full">
+              Điều Vân Mộc tin
+            </span>
+            <h3 className="text-2xl md:text-3xl font-serif text-white font-normal leading-snug italic max-w-2xl mx-auto">
+              “Sự chuyển hóa không bắt đầu khi có thêm lời khuyên.<br className="hidden md:block"/> Sự chuyển hóa bắt đầu khi một con người nhìn rõ chính mình.”
+            </h3>
           </div>
 
-          <div className="pt-4 border-t border-stone-200/40 max-w-xs mx-auto">
-            <p className="text-xs font-sans font-bold text-[#5A5A40] tracking-widest uppercase">
-              Đó là lý do Vân Mộc ra đời.
-            </p>
-            <div className="h-[2px] w-8 bg-[#5A5A40]/30 mx-auto mt-4"></div>
+          <div className="h-[1.5px] w-12 bg-stone-850 mx-auto z-10 relative"></div>
+
+          <div className="space-y-6 text-stone-300 font-sans text-xs md:text-sm leading-relaxed max-w-2xl mx-auto z-10 relative">
+            <h4 className="text-sm font-serif font-semibold text-amber-100 tracking-wide border-b border-stone-800 pb-2 mb-4 text-center md:text-left">
+              Cách Vân Mộc đồng hành
+            </h4>
+            
+            <div className="space-y-4 font-sans text-stone-300">
+              <p>
+                Mình không ở đây để đưa ra câu trả lời thay bạn. Mình cũng không ở đây để nói bạn phải sống như thế nào. Mình ở đây để lắng nghe. Lắng nghe đủ sâu để cùng bạn nhìn rõ điều gì đang thực sự diễn ra.
+              </p>
+              <p>
+                Nhiều khi, điều khiến chúng ta đau khổ không phải là vấn đề đang xảy ra, mà là chúng ta chưa nhìn thấy gốc rễ của nó. Thông qua những cuộc trò chuyện, mình sẽ cùng bạn khơi mở những suy nghĩ, cảm xúc, niềm tin và những khuôn mẫu đang âm thầm chi phối cuộc sống của bạn. Khi vấn đề được nhìn thấy rõ ràng, sự thay đổi sẽ bắt đầu.
+              </p>
+              <p>
+                Mình không quyết định thay bạn. Mình không sống thay bạn. Mình chỉ giúp bạn nhìn rõ hơn để bạn có đủ sự sáng suốt lựa chọn con đường phù hợp với chính mình.
+              </p>
+              <p>
+                Mình tin rằng, mỗi con người đều có sẵn câu trả lời bên trong mình. Đôi khi, điều họ cần chỉ là một người đủ kiên nhẫn để lắng nghe, đủ khách quan để phản chiếu và đủ chân thành để đồng hành trên hành trình ấy.
+              </p>
+            </div>
           </div>
         </div>
       </div>

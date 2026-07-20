@@ -40,22 +40,136 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ handleOpenEbookCheckou
   const [audioProgress, setAudioProgress] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<any | null>(null);
 
-  // Simulated Audio Playback
+  // Real Audio Playback States and Refs
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const ytPlayerRef = React.useRef<HTMLIFrameElement | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current && !audioList[activeAudio]?.youtubeId) {
+      setCurrentTime(audioRef.current.currentTime);
+      const progress = (audioRef.current.currentTime / audioRef.current.duration) * 100;
+      setAudioProgress(isNaN(progress) ? 0 : progress);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current && !audioList[activeAudio]?.youtubeId) {
+      setDuration(audioRef.current.duration || 0);
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+    setAudioProgress(0);
+    setCurrentTime(0);
+  };
+
+  const formatTime = (time: number) => {
+    if (isNaN(time) || !isFinite(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const clickRatio = clickX / width;
+
+    const activeTrack = audioList[activeAudio];
+    if (activeTrack?.youtubeId) {
+      const parts = activeTrack.duration.split(":");
+      const trackDurationSec = parts.length === 2 
+        ? parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10)
+        : 600;
+      
+      const newTime = clickRatio * trackDurationSec;
+      setCurrentTime(newTime);
+      setAudioProgress(clickRatio * 100);
+
+      // Seek the hidden YouTube iframe via postMessage
+      try {
+        ytPlayerRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ event: "command", func: "seekTo", args: [newTime, true] }),
+          "*"
+        );
+      } catch (err) {
+        console.warn("YouTube iframe seek postMessage error:", err);
+      }
+    } else if (audioRef.current && duration) {
+      const newTime = clickRatio * duration;
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+      setAudioProgress(clickRatio * 100);
+    }
+  };
+
+  // Synchronize Play/Pause for standard audio and hidden YouTube player
+  useEffect(() => {
+    const activeTrack = audioList[activeAudio];
+    if (activeTrack?.youtubeId) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      try {
+        const command = isPlaying ? "playVideo" : "pauseVideo";
+        ytPlayerRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ event: "command", func: command, args: "" }),
+          "*"
+        );
+      } catch (err) {
+        console.warn("YouTube iframe play/pause postMessage error:", err);
+      }
+    } else if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(err => {
+          console.warn("Audio playback failed:", err);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, activeAudio]);
+
+  // Track progress and durations for standard audio vs simulated timers for YouTube
   useEffect(() => {
     let interval: any;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setAudioProgress(p => {
-          if (p >= 100) {
-            setIsPlaying(false);
-            return 0;
-          }
-          return p + 2;
-        });
-      }, 400);
+    const activeTrack = audioList[activeAudio];
+
+    if (activeTrack?.youtubeId) {
+      const parts = activeTrack.duration.split(":");
+      const trackDurationSec = parts.length === 2 
+        ? parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10)
+        : 600;
+      setDuration(trackDurationSec);
+
+      if (isPlaying) {
+        interval = setInterval(() => {
+          setCurrentTime(prevTime => {
+            const nextTime = prevTime + 1;
+            if (nextTime >= trackDurationSec) {
+              setIsPlaying(false);
+              setAudioProgress(0);
+              return 0;
+            }
+            setAudioProgress((nextTime / trackDurationSec) * 100);
+            return nextTime;
+          });
+        }, 1000);
+      }
+    } else {
+      if (audioRef.current) {
+        setDuration(audioRef.current.duration || 0);
+      }
     }
-    return () => clearInterval(interval);
-  }, [isPlaying]);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPlaying, activeAudio]);
 
   const toggleChecklist = (id: string) => {
     setChecklistState(prev => ({ ...prev, [id]: !prev[id] }));
@@ -204,19 +318,35 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ handleOpenEbookCheckou
   };
 
   // 5. Audio Data
-  const audioList = [
-    { title: "Thiền quét cơ thể xả ly áp lực", duration: "15:00", type: "Guided Meditation" },
-    { title: "Reiki hỗ trợ tự phục hồi tổn thương", duration: "20:00", type: "Energy Tuning" },
-    { title: "Khẳng định tích cực bồi đắp nội lực", duration: "10:00", type: "Affirmations" },
-    { title: "Nếp sống chậm: Hướng dẫn phản tư", duration: "12:30", type: "Audio Guide" }
+  const audioList: Array<{ title: string; duration: string; type: string; youtubeId?: string; src?: string }> = [
+    {
+      title: "Nhạc Tần Số 432Hz: Làm Sạch Năng Lượng Tiêu Cực, Tăng Năng Lượng Tích Cực & Giải Phóng Căng Thẳng",
+      duration: "15:00",
+      type: "Frequency Tuning",
+      youtubeId: "O1aRo-xGxbM"
+    },
+    {
+      title: "Nhạc Reiki trị liệu: khơi thông dòng chảy năng lượng & giúp tập trung học tập, công việc",
+      duration: "20:00",
+      type: "Energy Tuning",
+      youtubeId: "RYKKq7_PGoU"
+    },
+    {
+      title: "Khẳng định tích cực bồi đắp nội lực",
+      duration: "10:00",
+      type: "Affirmations",
+      youtubeId: "56M0UcllB1U"
+    },
+    {
+      title: "Nếp sống chậm: Hướng dẫn phản tư",
+      duration: "12:30",
+      type: "Audio Guide",
+      youtubeId: "3S-p7rA81-w"
+    }
   ];
 
   // 6. Video Data
-  const videos = [
-    { id: "v-1", title: "Cơ chế phòng ngự bản ngã & Lớp mặt nạ", subject: "Tâm lý học", dur: "15:30", views: "1.2K học viên", color: "bg-stone-900", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-    { id: "v-2", title: "Phương pháp Tiếp đất (Grounding) phục hồi", subject: "Năng lượng", dur: "12:15", views: "980 học viên", color: "bg-amber-900", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-    { id: "v-3", title: "Thiết lập ranh giới tôn nghiêm lành mạnh", subject: "Khí chất", dur: "18:40", views: "1.5K học viên", color: "bg-emerald-900", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
-  ];
+  const videos: any[] = [];
 
   // 7. Resources Data
   const resourcesData = {
@@ -434,31 +564,73 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ handleOpenEbookCheckou
         {/* 5. AUDIO TAB */}
         {libraryTab === "audio" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-5 bg-stone-900 text-[#F7F5F0] rounded-2xl p-5 shadow-lg relative overflow-hidden flex flex-col justify-between min-h-[220px]">
-              <div className="flex justify-between items-center"><span className="text-[8px] font-mono tracking-widest uppercase bg-[#5A5A40] text-amber-200 px-1.5 py-0.2 rounded">Vân Mộc Soundscape</span><span className="text-[9px] text-stone-400 font-mono">PLAYER</span></div>
+            <audio
+              ref={audioRef}
+              src={audioList[activeAudio]?.src || ""}
+              onTimeUpdate={handleTimeUpdate}
+              onLoadedMetadata={handleLoadedMetadata}
+              onEnded={handleAudioEnded}
+            />
+
+            {/* Hidden YouTube background audio player */}
+            {audioList[activeAudio]?.youtubeId && (
+              <div className="w-0 h-0 opacity-0 absolute pointer-events-none overflow-hidden" aria-hidden="true">
+                <iframe
+                  key={activeAudio}
+                  ref={ytPlayerRef}
+                  width="1"
+                  height="1"
+                  src={`https://www.youtube.com/embed/${audioList[activeAudio].youtubeId}?enablejsapi=1&autoplay=${isPlaying ? 1 : 0}&controls=0&rel=0`}
+                  title={audioList[activeAudio].title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                />
+              </div>
+            )}
+
+            <div className="lg:col-span-5 bg-stone-900 text-[#F7F5F0] rounded-2xl p-5 shadow-lg relative overflow-hidden flex flex-col justify-between min-h-[260px]">
+              <div className="flex justify-between items-center">
+                <span className="text-[8px] font-mono tracking-widest uppercase bg-[#5A5A40] text-amber-200 px-1.5 py-0.2 rounded">
+                  Vân Mộc Soundscape
+                </span>
+                <span className="text-[9px] text-stone-400 font-mono">PLAYER</span>
+              </div>
               <div className="flex items-center gap-3 py-1">
-                <div className={`w-12 h-12 rounded-full bg-[#5A5A40] flex items-center justify-center border border-amber-200/20 ${isPlaying ? "animate-spin" : ""}`} style={{ animationDuration: "10s" }}><Headphones className="w-5 h-5 text-white" /></div>
-                <div>
-                  <div className="text-[8px] font-mono text-amber-200 uppercase">{audioList[activeAudio].type}</div>
-                  <h5 className="font-serif text-xs font-bold text-white leading-tight line-clamp-1">{audioList[activeAudio].title}</h5>
-                  <p className="text-[9px] text-stone-400 font-mono">Thời lượng: {audioList[activeAudio].duration}</p>
+                <div className={`w-12 h-12 rounded-full bg-[#5A5A40] flex items-center justify-center border border-amber-200/20 ${isPlaying ? "animate-spin" : ""}`} style={{ animationDuration: "10s" }}>
+                  <Headphones className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[8px] font-mono text-amber-200 uppercase">{audioList[activeAudio]?.type}</div>
+                  <h5 className="font-serif text-xs font-bold text-white leading-tight line-clamp-2" title={audioList[activeAudio]?.title}>{audioList[activeAudio]?.title}</h5>
+                  <p className="text-[9px] text-stone-400 font-mono">Thời lượng: {audioList[activeAudio]?.duration}</p>
                 </div>
               </div>
               <div className="space-y-1">
-                <div className="w-full bg-stone-800 h-1 rounded-full overflow-hidden"><div className="bg-[#5A5A40] h-full" style={{ width: `${audioProgress}%` }}></div></div>
-                <div className="flex justify-between text-[8px] font-mono text-stone-500"><span>0:{audioProgress < 10 ? `0${Math.floor(audioProgress * 0.3)}` : Math.floor(audioProgress * 0.3)}</span><span>{audioList[activeAudio].duration}</span></div>
+                <div onClick={handleProgressClick} className="w-full bg-stone-800 h-2 rounded-full overflow-hidden cursor-pointer relative hover:h-2.5 transition-all">
+                  <div className="bg-[#5A5A40] h-full rounded-full transition-all duration-105" style={{ width: `${audioProgress}%` }}></div>
+                </div>
+                <div className="flex justify-between text-[8px] font-mono text-stone-500">
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{audioList[activeAudio]?.duration}</span>
+                </div>
               </div>
-              <div className="flex justify-center gap-3"><button onClick={() => setIsPlaying(!isPlaying)} className="w-9 h-9 rounded-full bg-[#5A5A40] text-white flex items-center justify-center cursor-pointer shadow-md hover:scale-105 transition-transform">{isPlaying ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white ml-0.5" />}</button><button onClick={() => { setIsPlaying(false); setAudioProgress(0); }} className="p-1.5 text-stone-400 hover:text-white transition-colors cursor-pointer text-[10px] uppercase font-bold tracking-wider">Reset</button></div>
+              <div className="flex justify-center gap-3">
+                <button onClick={() => setIsPlaying(!isPlaying)} className="w-9 h-9 rounded-full bg-[#5A5A40] text-white flex items-center justify-center cursor-pointer shadow-md hover:scale-105 transition-transform">
+                  {isPlaying ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white ml-0.5" />}
+                </button>
+                <button onClick={() => { setIsPlaying(false); setAudioProgress(0); setCurrentTime(0); if (audioRef.current) audioRef.current.currentTime = 0; }} className="p-1.5 text-stone-400 hover:text-white transition-colors cursor-pointer text-[10px] uppercase font-bold tracking-wider">
+                  Reset
+                </button>
+              </div>
             </div>
 
             <div className="lg:col-span-7 flex flex-col gap-2">
               {audioList.map((track, idx) => (
-                <div key={idx} onClick={() => { setActiveAudio(idx); setAudioProgress(0); setIsPlaying(true); }} className={`p-3 rounded-xl border text-left cursor-pointer flex justify-between items-center transition-all ${activeAudio === idx ? "bg-[#5A5A40]/10 border-[#5A5A40]/30 font-bold" : "bg-white border-stone-200 hover:bg-stone-50"}`}>
-                  <div>
+                <div key={idx} onClick={() => { setActiveAudio(idx); setAudioProgress(0); setCurrentTime(0); setIsPlaying(true); }} className={`p-3 rounded-xl border text-left cursor-pointer flex justify-between items-center transition-all ${activeAudio === idx ? "bg-[#5A5A40]/10 border-[#5A5A40]/30 font-bold" : "bg-white border-stone-200 hover:bg-stone-50"}`}>
+                  <div className="flex-1 pr-3 min-w-0">
                     <span className="text-[8px] font-mono uppercase bg-stone-100 text-stone-500 px-1 py-0.2 rounded">{track.type}</span>
-                    <h5 className="font-serif text-xs font-bold text-stone-800 leading-tight mt-0.5">{track.title}</h5>
+                    <h5 className="font-serif text-xs font-bold text-stone-800 leading-tight mt-0.5 line-clamp-1" title={track.title}>{track.title}</h5>
                   </div>
-                  <span className="text-[10px] font-mono text-stone-400">{track.duration}</span>
+                  <span className="text-[10px] font-mono text-stone-400 shrink-0">{track.duration}</span>
                 </div>
               ))}
             </div>
@@ -467,23 +639,37 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ handleOpenEbookCheckou
 
         {/* 6. VIDEOS TAB */}
         {libraryTab === "videos" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            {videos.map(vid => (
-              <div key={vid.id} className="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col justify-between shadow-xs">
-                <div className={`p-4 ${vid.color} h-32 flex flex-col justify-between relative`}>
-                  <div className="flex justify-between items-center text-[9px] text-white/80 font-mono"><span className="bg-white/20 px-1.5 py-0.2 rounded uppercase">{vid.subject}</span><span>{vid.dur}</span></div>
-                  <button onClick={() => setSelectedVideo(vid)} className="w-8 h-8 rounded-full bg-white/95 text-stone-900 flex items-center justify-center mx-auto cursor-pointer shadow"><Play className="w-3.5 h-3.5 ml-0.5 text-stone-900" /></button>
-                  <div className="text-[8px] text-white/50 text-right font-mono">{vid.views}</div>
-                </div>
-                <div className="p-4 space-y-1.5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h5 className="font-serif text-xs font-bold text-stone-900 leading-snug line-clamp-2">{vid.title}</h5>
-                    <p className="text-[10px] text-stone-500 leading-relaxed mt-1 line-clamp-2">Khóa bài giảng đúc kết tri thức thấu cảm và tự định vị bản thể độc bản Vân Mộc.</p>
+          <div className="w-full">
+            {videos.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                {videos.map(vid => (
+                  <div key={vid.id} className="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col justify-between shadow-xs">
+                    <div className={`p-4 ${vid.color} h-32 flex flex-col justify-between relative`}>
+                      <div className="flex justify-between items-center text-[9px] text-white/80 font-mono"><span className="bg-white/20 px-1.5 py-0.2 rounded uppercase">{vid.subject}</span><span>{vid.dur}</span></div>
+                      <button onClick={() => setSelectedVideo(vid)} className="w-8 h-8 rounded-full bg-white/95 text-stone-900 flex items-center justify-center mx-auto cursor-pointer shadow"><Play className="w-3.5 h-3.5 ml-0.5 text-stone-900" /></button>
+                      <div className="text-[8px] text-white/50 text-right font-mono">{vid.views}</div>
+                    </div>
+                    <div className="p-4 space-y-1.5 flex-1 flex flex-col justify-between">
+                      <div>
+                        <h5 className="font-serif text-xs font-bold text-stone-900 leading-snug line-clamp-2">{vid.title}</h5>
+                        <p className="text-[10px] text-stone-500 leading-relaxed mt-1 line-clamp-2">Khóa bài giảng đúc kết tri thức thấu cảm và tự định vị bản thể độc bản Vân Mộc.</p>
+                      </div>
+                      <button onClick={() => setSelectedVideo(vid)} className="w-full py-2 border border-stone-250 text-stone-600 hover:bg-[#5A5A40]/5 rounded-xl text-[9px] font-bold uppercase tracking-wider mt-3 cursor-pointer">Xem bài giảng</button>
+                    </div>
                   </div>
-                  <button onClick={() => setSelectedVideo(vid)} className="w-full py-2 border border-stone-250 text-stone-600 hover:bg-[#5A5A40]/5 rounded-xl text-[9px] font-bold uppercase tracking-wider mt-3 cursor-pointer">Xem bài giảng</button>
+                ))}
+              </div>
+            ) : (
+              <div className="w-full py-16 text-center border border-dashed border-stone-200 rounded-2xl bg-white/40 space-y-3">
+                <div className="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center mx-auto text-stone-400">
+                  <Video className="w-5 h-5" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="font-serif text-sm font-bold text-stone-800">Hệ Thống Video Bài Giảng Đang Cập Nhật</h4>
+                  <p className="text-xs text-stone-400 max-w-sm mx-auto leading-relaxed">Nội dung video bài giảng học thuật của Vân Mộc đang được ghi hình chỉn chu và sẽ sớm hiển thị tại đây.</p>
                 </div>
               </div>
-            ))}
+            )}
 
             {selectedVideo && (
               <div className="fixed inset-0 bg-stone-900/80 z-50 flex items-center justify-center p-4 backdrop-blur-xs">

@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
+import { execSync } from "child_process";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 
@@ -409,6 +410,13 @@ app.post("/api/sheets/update-status", async (req, res) => {
 
 // Daily card pulling endpoint (provides local storage compatible, static, or optionally AI-enriched card pull)
 app.get("/api/download-zip", (req, res) => {
+  try {
+    console.log("Dynamically generating ZIP file before download...");
+    execSync("node generate-zip.js", { stdio: "inherit" });
+  } catch (zipErr) {
+    console.error("Error generating ZIP on-the-fly, serving existing zip if available:", zipErr);
+  }
+
   const zipPath = path.join(process.cwd(), "du_an_van_moc.zip");
   if (fs.existsSync(zipPath)) {
     res.download(zipPath, "du_an_van_moc.zip");
