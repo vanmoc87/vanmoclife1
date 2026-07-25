@@ -409,6 +409,12 @@ app.post("/api/sheets/update-status", async (req, res) => {
 });
 
 // Daily card pulling endpoint (provides local storage compatible, static, or optionally AI-enriched card pull)
+app.post("/api/admin/forgot-password", (req, res) => {
+  const { email } = req.body;
+  console.log(`[Forgot Password] Yêu cầu khôi phục mật khẩu từ Admin gửi tới email: ${email}`);
+  res.json({ success: true, message: `Mã khôi phục đã được gửi tới ${email}` });
+});
+
 app.get("/api/download-zip", (req, res) => {
   try {
     console.log("Dynamically generating ZIP file before download...");

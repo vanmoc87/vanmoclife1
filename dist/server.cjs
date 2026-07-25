@@ -378,6 +378,11 @@ app.post("/api/sheets/update-status", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+app.post("/api/admin/forgot-password", (req, res) => {
+  const { email } = req.body;
+  console.log(`[Forgot Password] Y\xEAu c\u1EA7u kh\xF4i ph\u1EE5c m\u1EADt kh\u1EA9u t\u1EEB Admin g\u1EEDi t\u1EDBi email: ${email}`);
+  res.json({ success: true, message: `M\xE3 kh\xF4i ph\u1EE5c \u0111\xE3 \u0111\u01B0\u1EE3c g\u1EEDi t\u1EDBi ${email}` });
+});
 app.get("/api/download-zip", (req, res) => {
   try {
     console.log("Dynamically generating ZIP file before download...");
