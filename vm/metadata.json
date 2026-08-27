@@ -1,0 +1,6 @@
+{
+  "name": "Vân Mộc - Phát triển bản thân",
+  "description": "Hành trình hiểu mình, chữa lành và tỏa sáng. Không gian phản chiếu nội tâm sâu sắc, rèn luyện nhân tâm và đồng hành cùng AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
