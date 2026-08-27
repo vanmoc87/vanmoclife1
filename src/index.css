@@ -1,7 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif+Display:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Lora", ui-serif, Georgia, serif;
+  --font-serif: "Noto Serif Display", ui-serif, Georgia, serif;
+  
+  --color-olive: #596044;
+  --color-olive-dark: #414733;
+  --color-olive-soft: #7C8463;
+  --color-sage: #A7AA91;
+  --color-gold: #B7A16A;
+  --color-gold-light: #D5C99F;
+  --color-charcoal: #292A26;
+  --color-ivory: #F5F2EA;
+  --color-ivory-light: #FBFAF7;
+  --color-brand-bg: #F5F2EA;
+  --color-brand-bg-soft: #FBFAF7;
+  --color-border-custom: #DDD8CD;
 }
