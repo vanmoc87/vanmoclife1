@@ -1,5 +1,12 @@
 import React from "react";
 import { motion } from "motion/react";
+import vuonImg from "../assets/images/vuon.jpg";
+import mocBanImg from "../assets/images/moc-ban.jpg";
+import jewelryImg from "../assets/images/jewelry.jpg";
+import makeupImg from "../assets/images/makeup.jpg";
+import articleVuonImg from "../assets/images/article-vuon.jpg";
+import articleMocbanImg from "../assets/images/article-mocban.jpg";
+import articleJewelryImg from "../assets/images/article-jewelry.jpg";
 import { 
   Sparkles, 
   Send, 
@@ -140,7 +147,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
               {/* Photo 1 (Vườn: Nature Serene - Large) */}
               <div className="col-span-7 relative overflow-hidden rounded-[14px] bg-stone group">
                 <img 
-                  src="images/vuon.jpg" 
+                  src={vuonImg} 
                   alt="Vườn Vân Mộc - Thiên nhiên yên bình" 
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
                   referrerPolicy="no-referrer"
@@ -158,7 +165,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                 {/* Photo 2 (Mộc Bản: Workspace & Notebook) */}
                 <div className="relative overflow-hidden rounded-[14px] bg-stone group">
                   <img 
-                    src="images/moc-ban.jpg" 
+                    src={mocBanImg} 
                     alt="Mộc Bản - Tri thức" 
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
                     referrerPolicy="no-referrer"
@@ -173,7 +180,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                 {/* Photo 3 (Jewelry: REAL Pearls & Gold detail - NO makeup) */}
                 <div className="relative overflow-hidden rounded-[14px] bg-stone group">
                   <img 
-                    src="images/jewelry.jpg" 
+                    src={jewelryImg} 
                     alt="Vân Mộc Jewelry Japan - Ngọc trai thâm trầm" 
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
                     referrerPolicy="no-referrer"
@@ -223,7 +230,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             <article className="rounded-[16px] bg-forest text-white flex flex-col overflow-hidden min-h-[540px] hover:-translate-y-1 transition-all duration-300 border border-forest text-left">
               <div className="h-[210px] w-full overflow-hidden shrink-0">
                 <img 
-                  src="images/vuon.jpg" 
+                  src={vuonImg} 
                   alt="Vườn Vân Mộc - Bản nguyên xanh"
                   className="w-full h-full object-cover transition-transform duration-500"
                   referrerPolicy="no-referrer"
@@ -260,7 +267,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             <article className="rounded-[16px] bg-stone text-charcoal flex flex-col overflow-hidden min-h-[540px] hover:-translate-y-1 transition-all duration-300 border border-stone-300/30 text-left">
               <div className="h-[210px] w-full overflow-hidden shrink-0">
                 <img 
-                  src="images/moc-ban.jpg" 
+                  src={mocBanImg} 
                   alt="Mộc Bản - Ghi chép và tri thức"
                   className="w-full h-full object-cover transition-transform duration-500"
                   referrerPolicy="no-referrer"
@@ -298,7 +305,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             <article className="rounded-[16px] bg-[#E9D9D0] text-[#40322D] flex flex-col overflow-hidden min-h-[540px] hover:-translate-y-1 transition-all duration-300 border border-rose-300/10 text-left">
               <div className="h-[210px] w-full overflow-hidden shrink-0">
                 <img 
-                  src="images/jewelry.jpg" 
+                  src={jewelryImg} 
                   alt="Vân Mộc Jewelry Japan - Đá quý mộc mạc"
                   className="w-full h-full object-cover transition-transform duration-500"
                   referrerPolicy="no-referrer"
@@ -391,7 +398,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
               {/* Image 55% */}
               <div className="md:col-span-7 h-60 md:h-auto overflow-hidden relative">
                 <img 
-                  src="images/makeup.jpg" 
+                  src={makeupImg} 
                   alt="Vân Mộc Beauty Portrait - Khóa Makeup cá nhân" 
                   className="w-full h-full object-cover object-center"
                   referrerPolicy="no-referrer"
@@ -893,7 +900,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             <article className="group text-left border-b border-stone-200/40 pb-6">
               <div className="aspect-[4/3] rounded-[12px] overflow-hidden relative bg-stone shrink-0">
                 <img 
-                  src="images/article-vuon.jpg" 
+                  src={articleVuonImg} 
                   alt="Bài viết Vườn Vân Mộc - Chánh niệm" 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-101"
                   referrerPolicy="no-referrer"
@@ -916,7 +923,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             <article className="group text-left border-b border-stone-200/40 pb-6">
               <div className="aspect-[4/3] rounded-[12px] overflow-hidden relative bg-stone shrink-0">
                 <img 
-                  src="images/article-mocban.jpg" 
+                  src={articleMocbanImg} 
                   alt="Bài viết Mộc Bản - Sách vở thong thong" 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-101"
                   referrerPolicy="no-referrer"
@@ -939,7 +946,7 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             <article className="group text-left border-b border-stone-200/40 pb-6">
               <div className="aspect-[4/3] rounded-[12px] overflow-hidden relative bg-stone shrink-0">
                 <img 
-                  src="images/article-jewelry.jpg" 
+                  src={articleJewelryImg} 
                   alt="Bài viết Jewelry - Chi tiết ngọc trai" 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-101"
                   referrerPolicy="no-referrer"
