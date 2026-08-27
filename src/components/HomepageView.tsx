@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "motion/react";
 import { 
   Sparkles, 
   Send, 
+  ArrowUpRight, 
   BookOpen, 
-  ChevronRight, 
-  ArrowUpRight 
+  MessageSquare, 
+  Sliders, 
+  BookMarked 
 } from "lucide-react";
 
 interface HomepageViewProps {
@@ -57,15 +59,18 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
   journalEntries,
   saveJournalEntries,
 }) => {
-  
-  // Local state for pulling card
+
+  // Fetch a daily card from the actual server API
   const handleDailyCardPull = async () => {
     setIsPullingCard(true);
     try {
-      const res = await fetch("/api/daily-card");
-      const data = await res.json();
-      if (data && data.quote) {
-        setDailyCard(data);
+      const res = await fetch("/api/cards/daily");
+      if (res.ok) {
+        const cards = await res.json();
+        if (cards && cards.length > 0) {
+          const randomIdx = Math.floor(Math.random() * cards.length);
+          setDailyCard(cards[randomIdx]);
+        }
       }
     } catch (err) {
       console.error("Error pulling daily card:", err);
@@ -75,106 +80,111 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
   };
 
   return (
-    <div className="font-sans text-charcoal bg-ivory selection:bg-olive/10 selection:text-olive">
+    <div className="font-sans text-charcoal bg-cream selection:bg-forest/10 selection:text-forest overflow-x-hidden">
       
       {/* ==========================================
-          01 HERO SECTION WITH EDITORIAL IMAGES
+          01 HERO: Cream + Editorial Mosaic (3 Images)
          ========================================== */}
-      <section className="py-6 md:py-12 px-4 md:px-8" id="home">
+      <section className="py-8 md:py-14 px-4 md:px-8 bg-cream-light" id="home">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch border border-border-custom rounded-2xl bg-ivory-light overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch border border-stone-200/10 rounded-[22px] bg-cream overflow-hidden min-h-[620px]">
             
-            {/* Hero Copy (7 Cols on large screen) */}
-            <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-center text-left space-y-8">
-              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-olive font-sans">
+            {/* Copy Column */}
+            <div className="lg:col-span-6 p-6 md:p-12 lg:p-14 flex flex-col justify-center text-left space-y-5">
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-forest font-sans">
                 Vân Mộc Life
               </span>
 
               <motion.h1 
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="font-serif text-5xl md:text-6xl lg:text-[76px] font-medium tracking-tight text-[#292A26] leading-[1.05]"
+                transition={{ duration: 0.7 }}
+                className="font-serif text-[42px] md:text-[50px] lg:text-[76px] font-medium tracking-tighter text-charcoal leading-[1.0]"
               >
                 Hiểu mình.<br />
                 Phát triển mình.<br />
-                <span className="text-olive">Sống theo cách riêng.</span>
+                Sống theo cách riêng.
               </motion.h1>
 
-              <p className="font-sans text-sm md:text-base text-body-text max-w-xl leading-relaxed">
-                Vân Mộc Life là một hệ sinh thái về con người, tri thức, vẻ đẹp và phong cách sống — nơi mỗi hành trình bắt đầu từ việc hiểu sâu sắc bản thể của chính mình.
+              <p className="font-sans text-xs md:text-sm text-text-soft max-w-lg leading-relaxed">
+                Một hệ sinh thái về con người, tri thức, vẻ đẹp và phong cách sống — nơi mỗi hành trình bắt đầu từ việc hiểu sâu sắc bản thân để sống rực rỡ khí chất.
               </p>
 
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 pt-3">
                 <a 
                   href="#ecosystem" 
                   onClick={(e) => {
                     e.preventDefault();
                     document.getElementById("ecosystem")?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="min-h-[52px] px-8 rounded-full bg-olive hover:bg-olive-dark text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
+                  className="min-h-[46px] px-6 rounded-full bg-forest hover:bg-forest-deep text-white font-semibold text-[11px] uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Khám phá hệ sinh thái
                 </a>
                 <a 
-                  href="#start-journey" 
+                  href="#journey" 
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById("start-journey")?.scrollIntoView({ behavior: "smooth" });
+                    document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="min-h-[52px] px-8 rounded-full border border-olive/35 text-olive hover:bg-olive hover:text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
+                  className="min-h-[46px] px-6 rounded-full border border-forest/30 text-forest hover:bg-forest hover:text-white font-semibold text-[11px] uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Bắt đầu từ đâu?
                 </a>
               </div>
             </div>
 
-            {/* Hero Editorial Composition Grid (5 Cols on large screen) */}
-            <div className="lg:col-span-5 p-4 md:p-6 bg-[#EFEBE2] grid grid-cols-2 grid-rows-2 gap-3 min-h-[460px] lg:min-h-auto">
+            {/* Editorial Mosaic (3 Images) */}
+            <div className="lg:col-span-6 p-4 md:p-6 grid grid-cols-12 gap-3 min-h-[480px]">
               
-              {/* Card 1: Vườn Vân Mộc (Tall image representing inner reflection & nature) */}
-              <div className="col-span-1 row-span-2 rounded-xl overflow-hidden relative group">
+              {/* Photo 1 (Vườn: Nature Serene - Large) */}
+              <div className="col-span-7 relative overflow-hidden rounded-[14px] bg-stone group">
                 <img 
-                  src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=600" 
-                  alt="Vườn Vân Mộc - Reflection" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src="/images/vuon.jpg" 
+                  alt="Vườn Vân Mộc - Thiên nhiên yên bình" 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-black/10 mix-blend-multiply"></div>
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <p className="text-[10px] font-bold tracking-widest uppercase opacity-90 font-sans">01 / Inner World</p>
-                  <p className="font-serif text-sm font-medium mt-0.5">Vườn Vân Mộc</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute left-4 bottom-4 text-left text-white">
+                  <span className="text-[9px] uppercase tracking-widest text-champagne font-semibold block">01 / Vườn</span>
+                  <strong className="font-serif text-lg font-medium">Inner World</strong>
                 </div>
               </div>
 
-              {/* Card 2: Mộc Bản (Clean, calm workspace representing focused knowledge & business) */}
-              <div className="col-span-1 row-span-1 rounded-xl overflow-hidden relative group">
-                <img 
-                  src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=400" 
-                  alt="Mộc Bản - Knowledge" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <p className="text-[10px] font-bold tracking-widest uppercase opacity-90 font-sans">02 / Knowledge</p>
-                  <p className="font-serif text-sm font-medium mt-0.5">Mộc Bản</p>
+              {/* Stack on Right */}
+              <div className="col-span-5 grid grid-rows-2 gap-3">
+                
+                {/* Photo 2 (Mộc Bản: Workspace & Notebook) */}
+                <div className="relative overflow-hidden rounded-[14px] bg-stone group">
+                  <img 
+                    src="/images/moc-ban.jpg" 
+                    alt="Mộc Bản - Tri thức" 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="absolute left-3 bottom-3 text-left text-white">
+                    <span className="text-[8px] uppercase tracking-widest text-stone font-semibold block">02 / Mộc Bản</span>
+                    <strong className="font-serif text-sm font-medium">Knowledge</strong>
+                  </div>
                 </div>
-              </div>
 
-              {/* Card 3: Jewelry (Refined, artistic close-up of premium Japanese pearl or classic gemstone detail) */}
-              <div className="col-span-1 row-span-1 rounded-xl overflow-hidden relative group">
-                <img 
-                  src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400" 
-                  alt="Jewelry - Refined Style" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <p className="text-[10px] font-bold tracking-widest uppercase opacity-90 font-sans">03 / Personal Style</p>
-                  <p className="font-serif text-sm font-medium mt-0.5">Jewelry Japan</p>
+                {/* Photo 3 (Jewelry: REAL Pearls & Gold detail - NO makeup) */}
+                <div className="relative overflow-hidden rounded-[14px] bg-stone group">
+                  <img 
+                    src="/images/jewelry.jpg" 
+                    alt="Vân Mộc Jewelry Japan - Ngọc trai thâm trầm" 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="absolute left-3 bottom-3 text-left text-white">
+                    <span className="text-[8px] uppercase tracking-widest text-rose font-semibold block">03 / Jewelry</span>
+                    <strong className="font-serif text-sm font-medium">Style &amp; Pearl</strong>
+                  </div>
                 </div>
+
               </div>
 
             </div>
@@ -184,283 +194,235 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
       </section>
 
       {/* ==========================================
-          02 THREE DISTINCT ECOSYSTEM BRANCHES
+          02 ECOSYSTEM: 3 distinct visual cards
          ========================================== */}
-      <section className="py-16 md:py-24 px-4 md:px-8 border-y border-border-custom bg-ivory-light" id="ecosystem">
-        <div className="max-w-7xl mx-auto space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end text-left">
-            <div className="lg:col-span-6 space-y-3">
-              <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-olive font-sans">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-cream" id="ecosystem">
+        <div className="max-w-7xl mx-auto space-y-10">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end text-left">
+            <div className="lg:col-span-7 space-y-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-forest font-sans block">
                 The Vân Mộc Ecosystem
               </span>
-              <h2 className="font-serif font-medium text-4xl md:text-5xl lg:text-[56px] tracking-tight text-charcoal leading-tight">
+              <h2 className="font-serif font-medium text-[36px] md:text-[40px] lg:text-[52px] tracking-tight text-charcoal leading-tight">
                 Ba không gian.<br />
-                Một hành trình.
+                Một hành trình bản sắc.
               </h2>
             </div>
-            <div className="lg:col-span-6">
-              <p className="text-body-text text-sm md:text-base leading-relaxed max-w-xl">
-                Mỗi không gian của Vân Mộc đại diện cho một phần khác nhau trong hành trình trưởng thành — từ thế giới bên trong, năng lực thực chiến, đến thẩm mỹ và cách ta xuất hiện tinh tế trước cuộc đời.
+            <div className="lg:col-span-5">
+              <p className="text-text-soft text-xs md:text-sm leading-relaxed max-w-xl">
+                Mỗi không gian là một mảnh ghép thiêng liêng: nuôi dưỡng thế giới nội tâm tại Vườn, khai phóng tri thức tại Mộc Bản và tinh chọn vẻ đẹp phong thái cùng Jewelry Japan.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             
-            {/* Card 1: Vườn Vân Mộc - Primary Featured Identity (Luxurious Deep Olive card) */}
-            <article className="p-8 rounded-xl bg-olive text-white flex flex-col justify-between min-h-[500px] hover:-translate-y-1 transition-all duration-300 text-left border border-olive">
-              <div className="space-y-6">
-                <span className="font-serif text-sm text-gold-light font-medium block">
-                  01 / Inner World
-                </span>
-                <h3 className="font-serif text-3xl lg:text-4xl leading-tight font-medium">
-                  Vườn<br />Vân Mộc
-                </h3>
-                <p className="text-xs md:text-sm text-white/80 leading-relaxed font-sans">
-                  Không gian soi chiếu con người từ bên trong, giúp bạn nhận diện cảm xúc, khuôn mẫu, bản chất và cách mình đang vận hành.
-                </p>
-                
-                {/* Real sublinks mapping directly to views */}
-                <div className="flex flex-col gap-2.5 pt-4 text-left border-t border-white/15">
-                  <a 
-                    href="/vuon-van-moc/human-profile" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("ho_so_phat_trien");
-                      setHoSoActiveSubTab("dashboard");
-                    }} 
-                    className="text-xs text-white/90 hover:text-gold-light transition-colors flex justify-between items-center group/item"
-                  >
-                    <span>• Bản đồ sinh học (Human Profile)</span>
-                    <span className="text-[10px] text-gold-light font-serif">Xem ngay →</span>
-                  </a>
-                  <a 
-                    href="/vuon-van-moc/coaching" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("coaching");
-                    }} 
-                    className="text-xs text-white/90 hover:text-gold-light transition-colors flex justify-between items-center group/item"
-                  >
-                    <span>• Đặt lịch Coaching 1:1</span>
-                    <span className="text-[10px] text-gold-light font-serif">Đặt chỗ →</span>
-                  </a>
-                  <a 
-                    href="/vuon-van-moc/ebook" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsEbookReaderOpen(true);
-                    }} 
-                    className="text-xs text-white/90 hover:text-gold-light transition-colors flex justify-between items-center group/item"
-                  >
-                    <span>• Đọc sách Hiểu Mình Tỏa Sáng</span>
-                    <span className="text-[10px] text-gold-light font-serif">Mở đọc →</span>
-                  </a>
-                </div>
+            {/* Card 1: Vườn Vân Mộc (Visual Identity = Forest Green background) */}
+            <article className="rounded-[16px] bg-forest text-white flex flex-col overflow-hidden min-h-[540px] hover:-translate-y-1 transition-all duration-300 border border-forest text-left">
+              <div className="h-[210px] w-full overflow-hidden shrink-0">
+                <img 
+                  src="/images/vuon.jpg" 
+                  alt="Vườn Vân Mộc - Bản nguyên xanh"
+                  className="w-full h-full object-cover transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
-              <a 
-                href="/vuon" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab("thu_vien_tri_thuc");
-                }}
-                className="pt-5 font-semibold text-xs tracking-wider uppercase border-t border-white/10 mt-6 block text-[#D5C99F] hover:text-white transition-colors font-sans"
-              >
-                Bước vào Vườn Vân Mộc →
-              </a>
+              <div className="p-7 flex flex-col flex-1 justify-between">
+                <div className="space-y-3">
+                  <span className="text-[12px] font-serif text-champagne block font-medium">
+                    01 / Inner World
+                  </span>
+                  <h3 className="font-serif text-[28px] lg:text-[32px] font-medium leading-tight">
+                    Vườn Vân Mộc
+                  </h3>
+                  <p className="text-xs text-stone/90 leading-relaxed font-sans">
+                    Không gian chầm chậm quay về ôm ấp xúc cảm xáo động, giải mã khuôn mẫu cũ để thiết lập năng lực chuyển hóa sâu sắc bên trong linh hồn.
+                  </p>
+                </div>
+
+                <a 
+                  href="/vuon" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab("thu_vien_tri_thuc");
+                  }}
+                  className="text-[11px] font-semibold tracking-wider uppercase text-champagne hover:text-white transition-colors mt-8 font-sans border-t border-white/10 pt-4"
+                >
+                  Khám phá Vườn →
+                </a>
+              </div>
             </article>
 
-            {/* Card 2: Mộc Bản - Rational Modern Workspace Identity (Crisp white card with subtle borders) */}
-            <article className="p-8 rounded-xl bg-white text-charcoal flex flex-col justify-between min-h-[500px] hover:-translate-y-1 transition-all duration-300 text-left border border-border-custom">
-              <div className="space-y-6">
-                <span className="font-serif text-sm text-olive font-medium block">
-                  02 / Knowledge
-                </span>
-                <h3 className="font-serif text-3xl lg:text-4xl leading-tight font-medium">
-                  Mộc<br />Bản
-                </h3>
-                <p className="text-xs md:text-sm text-body-text leading-relaxed font-sans">
-                  Không gian ghi lại hành trình học tập, đúc rút tri thức ứng dụng, chuyển giao công nghệ và xây dựng doanh nghiệp số vững mạnh.
-                </p>
-
-                {/* Real sublinks / categories */}
-                <div className="flex flex-col gap-2.5 pt-4 text-left border-t border-border-custom">
-                  <a 
-                    href="/moc-ban/digital-business" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("ho_so_phat_trien");
-                      setHoSoActiveSubTab("dashboard");
-                    }} 
-                    className="text-xs text-stone-600 hover:text-olive transition-colors flex justify-between items-center"
-                  >
-                    <span>• Kiến tạo Doanh Nghiệp Số</span>
-                    <span className="text-[10px] text-olive">Truy cập →</span>
-                  </a>
-                  <div className="text-xs text-stone-400 flex justify-between items-center">
-                    <span>• Sáng tạo Nội dung thực chiến</span>
-                    <span className="text-[10px] italic font-serif">Coming Soon</span>
-                  </div>
-                  <div className="text-xs text-stone-400 flex justify-between items-center">
-                    <span>• Đúc kết Ứng dụng AI &amp; Web</span>
-                    <span className="text-[10px] italic font-serif">Coming Soon</span>
-                  </div>
-                </div>
+            {/* Card 2: Mộc Bản (Visual Identity = Warm Stone background) */}
+            <article className="rounded-[16px] bg-stone text-charcoal flex flex-col overflow-hidden min-h-[540px] hover:-translate-y-1 transition-all duration-300 border border-stone-300/30 text-left">
+              <div className="h-[210px] w-full overflow-hidden shrink-0">
+                <img 
+                  src="/images/moc-ban.jpg" 
+                  alt="Mộc Bản - Ghi chép và tri thức"
+                  className="w-full h-full object-cover transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
-              <a 
-                href="/moc-ban" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab("ho_so_phat_trien");
-                }}
-                className="pt-5 font-semibold text-xs tracking-wider uppercase border-t border-stone-100 mt-6 block text-olive hover:text-olive-dark transition-colors font-sans"
-              >
-                Khám phá Mộc Bản →
-              </a>
+              <div className="p-7 flex flex-col flex-1 justify-between">
+                <div className="space-y-3">
+                  <span className="text-[12px] font-serif text-forest block font-medium">
+                    02 / Knowledge
+                  </span>
+                  <h3 className="font-serif text-[28px] lg:text-[32px] font-medium leading-tight">
+                    Mộc Bản
+                  </h3>
+                  <p className="text-xs text-text-soft leading-relaxed font-sans">
+                    Nơi kiến tạo và đóng gói kỹ năng thực chiến: Trực quan hóa nội dung số, tối ưu trợ lý AI cá nhân, viết lách thong thả và xây dựng doanh nghiệp thăng hoa.
+                  </p>
+                </div>
+
+                <a 
+                  href="/moc-ban" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab("ho_so_phat_trien");
+                    setHoSoActiveSubTab("dashboard");
+                  }}
+                  className="text-[11px] font-semibold tracking-wider uppercase text-forest hover:text-forest-deep transition-colors mt-8 font-sans border-t border-stone-400/20 pt-4"
+                >
+                  Khám phá Mộc Bản →
+                </a>
+              </div>
             </article>
 
-            {/* Card 3: Vân Mộc Jewelry Japan - Soft Elegant Luxury Identity (Cream color light card with gold border accents) */}
-            <article className="p-8 rounded-xl bg-white text-charcoal flex flex-col justify-between min-h-[500px] hover:-translate-y-1 transition-all duration-300 text-left border border-[#D5C99F]/40 bg-[radial-gradient(ellipse_at_top_right,rgba(183,161,106,0.04),transparent_50%)]">
-              <div className="space-y-6">
-                <span className="font-serif text-sm text-olive font-medium block">
-                  03 / Personal Style
-                </span>
-                <h3 className="font-serif text-3xl lg:text-4xl leading-tight font-medium">
-                  Vân Mộc<br />Jewelry Japan
-                </h3>
-                <p className="text-xs md:text-sm text-body-text leading-relaxed font-sans">
-                  Không gian tuyển lựa những món trang sức ngọc trai Nhật Bản tinh khiết, chuỗi đá quý chữa lành mang dấu ấn tự do vẹn toàn.
-                </p>
-
-                {/* Catalog classifications */}
-                <div className="flex flex-col gap-2.5 pt-4 text-left border-t border-border-custom">
-                  <a 
-                    href="/jewelry" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("store");
-                      setProductFilter("jewelry");
-                    }} 
-                    className="text-xs text-stone-600 hover:text-olive transition-colors flex justify-between items-center"
-                  >
-                    <span>• Akoya Pearl &amp; Vintage Silver</span>
-                    <span className="text-[10px] text-stone-400">Xem mẫu →</span>
-                  </a>
-                  <a 
-                    href="/jewelry" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("store");
-                      setProductFilter("vong_da");
-                    }} 
-                    className="text-xs text-stone-600 hover:text-olive transition-colors flex justify-between items-center"
-                  >
-                    <span>• Vòng Đá Tự Nhiên &amp; Tinh Thể</span>
-                    <span className="text-[10px] text-stone-400">Xem mẫu →</span>
-                  </a>
-                  <a 
-                    href="/jewelry" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("store");
-                      setProductFilter("tinh_the");
-                    }} 
-                    className="text-xs text-stone-600 hover:text-olive transition-colors flex justify-between items-center"
-                  >
-                    <span>• Tây Tạng Dzi Thiên Châu</span>
-                    <span className="text-[10px] text-stone-400">Xem mẫu →</span>
-                  </a>
-                </div>
+            {/* Card 3: Vân Mộc Jewelry Japan (Visual Identity = Wine/Rose background) */}
+            <article className="rounded-[16px] bg-[#E9D9D0] text-[#40322D] flex flex-col overflow-hidden min-h-[540px] hover:-translate-y-1 transition-all duration-300 border border-rose-300/10 text-left">
+              <div className="h-[210px] w-full overflow-hidden shrink-0">
+                <img 
+                  src="/images/jewelry.jpg" 
+                  alt="Vân Mộc Jewelry Japan - Đá quý mộc mạc"
+                  className="w-full h-full object-cover transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
-              <a 
-                href="/jewelry" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveTab("store");
-                  setProductFilter("jewelry");
-                }}
-                className="pt-5 font-semibold text-xs tracking-wider uppercase border-t border-stone-100 mt-6 block text-olive hover:text-olive-dark transition-colors font-sans"
-              >
-                Khám phá Jewelry →
-              </a>
+              <div className="p-7 flex flex-col flex-1 justify-between">
+                <div className="space-y-3">
+                  <span className="text-[12px] font-serif text-wine block font-medium">
+                    03 / Personal Style
+                  </span>
+                  <h3 className="font-serif text-[28px] lg:text-[32px] font-medium leading-tight">
+                    Jewelry Japan
+                  </h3>
+                  <p className="text-xs text-wine/80 leading-relaxed font-sans">
+                    Tuyển chọn trang sức Nhật Bản tinh xảo mang thần thái thâm trầm, ngọc trai nước ngọt và đá năng lượng để định hình phong cách quý phái lặng im.
+                  </p>
+                </div>
+
+                <a 
+                  href="/jewelry" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab("store");
+                    setProductFilter("jewelry");
+                  }}
+                  className="text-[11px] font-semibold tracking-wider uppercase text-wine hover:text-wine/80 transition-colors mt-8 font-sans border-t border-wine/10 pt-4"
+                >
+                  Khám phá Jewelry →
+                </a>
+              </div>
             </article>
 
           </div>
+
         </div>
       </section>
 
       {/* ==========================================
-          03 PHILOSOPHY BLOCK
+          03 PHILOSOPHY: Sand Beige Background + Quote (Max 51px)
          ========================================== */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-ivory text-left" id="philosophy">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-24 items-start">
+      <section className="py-20 px-4 md:px-8 bg-sand-light text-left" id="about">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-start">
+          
           <div className="lg:col-span-4">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-olive font-sans">
+            <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-forest font-sans">
               The Philosophy
             </span>
           </div>
 
           <div className="lg:col-span-8 space-y-6">
-            <h2 className="font-serif font-medium text-4xl md:text-5xl lg:text-[62px] text-charcoal leading-[1.1] tracking-tight">
-              Một con người không chỉ được tạo nên bởi điều họ biết, mà còn bởi cách họ <span className="text-olive">hiểu mình, chăm sóc mình và lựa chọn cách sống.</span>
+            <h2 className="font-serif font-medium text-[28px] md:text-[34px] lg:text-[45px] text-ink leading-[1.15] tracking-tight max-w-[850px]">
+              Một con người không chỉ được tạo nên bởi điều họ biết. Bản sắc còn nằm ở cách ta <span className="text-forest italic">hiểu mình, chăm sóc mình và lựa chọn cách sống.</span>
             </h2>
-            <p className="text-body-text text-sm md:text-base leading-relaxed max-w-2xl font-sans">
-              Vân Mộc tin rằng bản sắc được hình thành từ sự kết nối giữa thế giới bên trong lặng lẽ, năng lực chúng ta tích luỹ, và cách chúng ta tinh tuyển lựa chọn xuất hiện trước cuộc đời.
+            <div className="w-14 h-[1px] bg-bronze my-4"></div>
+            <p className="text-text-soft text-xs md:text-sm leading-relaxed max-w-2xl font-sans">
+              Vân Mộc tin rằng mọi sự nở rộ bên ngoài đều bắt nguồn từ một hiên nhà tĩnh lặng bên trong. Khí chất tinh tế không cần ồn ào khẳng định, nó tự tỏa sáng qua từng quyết định tự tại và thấu triệt linh hồn mình.
             </p>
           </div>
+
         </div>
       </section>
 
       {/* ==========================================
-          04 ACADEMY SECTION (MAKEUP FEATURED)
+          04 ACADEMY: Cream + Deep Ink + Rose
          ========================================== */}
-      <section className="py-16 md:py-24 px-4 md:px-8 border-t border-border-custom" id="academy">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-cream border-t border-stone-200/15" id="academy">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div className="max-w-3xl text-left space-y-4">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-olive font-sans">
+          
+          {/* Header */}
+          <div className="max-w-3xl text-left space-y-3">
+            <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-forest font-sans">
               Vân Mộc Academy
             </span>
-            <h2 className="font-serif font-medium text-4xl md:text-5xl lg:text-[56px] tracking-tight text-charcoal leading-tight">
-              Học một kỹ năng.<br />
+            <h2 className="font-serif font-medium text-[36px] md:text-[40px] lg:text-[50px] tracking-tight text-charcoal leading-tight">
+              Học một điều mới.<br />
               Mở một khả năng mới.
             </h2>
-            <p className="text-body-text text-sm md:text-base leading-relaxed">
-              Các chương trình thực hành tại Vân Mộc Academy đồng hành giúp chuyển giao kiến thức khô khan thành năng lực hiện hữu sâu trong đời sống, rèn sắc diện và gieo mầm doanh nghiệp.
+            <p className="text-text-soft text-xs md:text-sm leading-relaxed max-w-xl">
+              Nơi chắt lọc những chương trình đào tạo cốt lõi giúp rèn luyện phong thái rực rỡ khí sắc và nâng tầm nội lực doanh nghiệp cá nhân bền bỉ.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
             
-            {/* MAKEUP FEATURED (Left, Big Card) */}
-            <article className="lg:col-span-7 min-h-[480px] md:min-h-[530px] p-8 md:p-12 rounded-xl bg-[#282823] text-white flex flex-col justify-end relative overflow-hidden text-left">
-              <div className="absolute right-[-40px] top-12 font-serif text-[160px] text-white/[0.02] select-none pointer-events-none leading-none">
-                BEAUTY
+            {/* MAKEUP FEATURED (Image 55% / Content 45% - Image: makeup.jpg beauty portrait) */}
+            <div className="lg:col-span-8 rounded-[18px] bg-ink text-white overflow-hidden grid grid-cols-1 md:grid-cols-12 items-stretch min-h-[520px]">
+              
+              {/* Image 55% */}
+              <div className="md:col-span-7 h-60 md:h-auto overflow-hidden relative">
+                <img 
+                  src="/images/makeup.jpg" 
+                  alt="Vân Mộc Beauty Portrait - Khóa Makeup cá nhân" 
+                  className="w-full h-full object-cover object-center"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
-              <div className="space-y-6 relative z-10 max-w-xl">
-                <span className="text-[#D6C69A] font-bold uppercase text-[10px] tracking-widest font-sans">
-                  Featured Program · Beauty
-                </span>
-                <h3 className="font-serif font-medium text-4xl md:text-5xl lg:text-[62px] tracking-tight leading-none text-stone-100">
-                  The Art<br />of Makeup.
-                </h3>
-                <p className="text-xs md:text-sm text-stone-300 leading-relaxed font-sans">
-                  Makeup không phải để biến bạn thành một con người xa lạ khác biệt. Đó là cách bạn hiểu kết cấu gương mặt, gieo bảng màu phong cách và làm nổi bật vẻ đẹp sẵn có của chính mình.
-                </p>
+              {/* Content 45% */}
+              <div className="md:col-span-5 p-7 md:p-9 flex flex-col justify-between text-left space-y-4">
+                <div className="space-y-3">
+                  <span className="text-champagne font-bold uppercase text-[9px] tracking-widest font-sans block">
+                    Featured Program · Beauty
+                  </span>
+                  <h3 className="font-serif font-medium text-[28px] md:text-[32px] tracking-tight leading-tight text-stone-100">
+                    The Art of<br />Makeup.
+                  </h3>
+                  <p className="text-[11px] md:text-xs text-stone-300 leading-relaxed font-sans">
+                    Trang điểm không phải là chiếc mặt nạ để giấu đi bản thân. Đó là sự thấu hiểu đường nét độc bản, phối khí sắc tươi rạng để bạn tự tin nhìn ngắm chính mình rực rỡ nhất.
+                  </p>
+                </div>
 
-                <div className="pt-2 flex flex-col gap-2 border-t border-white/10 text-left">
+                <div className="space-y-2.5 pt-4 border-t border-white/10">
                   <a 
                     href="/academy/makeup" 
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveTab("store");
+                      setProductFilter("course");
                     }}
-                    className="text-xs font-semibold text-gold hover:text-white transition-colors flex justify-between items-center group"
+                    className="text-xs font-semibold text-champagne hover:text-white transition-colors flex justify-between items-center group font-sans"
                   >
-                    <span>• Khóa học Makeup Cá Nhân (Tự tin rạng rỡ mỗi ngày)</span>
+                    <span>• Khóa Makeup Cá Nhân</span>
                     <span className="text-[10px] text-stone-400 group-hover:text-white">Chi tiết →</span>
                   </a>
                   <a 
@@ -468,78 +430,79 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveTab("store");
+                      setProductFilter("course");
                     }}
-                    className="text-xs font-semibold text-gold hover:text-white transition-colors flex justify-between items-center group"
+                    className="text-xs font-semibold text-champagne hover:text-white transition-colors flex justify-between items-center group font-sans"
                   >
-                    <span>• Khóa học Hiểu &amp; Chăm Sóc Làn Da Của Mình</span>
+                    <span>• Khóa Chăm Sóc Làn Da</span>
                     <span className="text-[10px] text-stone-400 group-hover:text-white">Chi tiết →</span>
                   </a>
                 </div>
 
-                <div className="pt-2">
-                  <a 
-                    href="/academy/makeup" 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActiveTab("store");
-                    }}
-                    className="inline-flex min-h-[48px] px-6 rounded-full border border-white/40 hover:border-white text-white font-semibold text-xs uppercase tracking-wider items-center justify-center transition-all duration-300 hover:bg-white hover:text-stone-900 mt-2 font-sans"
-                  >
-                    Tìm hiểu khóa học →
-                  </a>
-                </div>
+                <button 
+                  onClick={() => {
+                    setActiveTab("store");
+                    setProductFilter("course");
+                  }}
+                  className="min-h-[42px] px-5 rounded-full border border-white/20 hover:border-white text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:bg-white hover:text-ink font-sans w-full"
+                >
+                  Tìm hiểu khóa học
+                </button>
               </div>
-            </article>
 
-            {/* OTHER SUB-ACADEMY PROGRAMS (Right, List) */}
-            <div className="lg:col-span-5 grid grid-rows-2 gap-6 text-left">
+            </div>
+
+            {/* Side columns: Digital (Warm Stone) & Self (Warm Rose) */}
+            <div className="lg:col-span-4 flex flex-col gap-5 justify-between">
               
-              <article className="p-8 bg-white border border-border-custom rounded-xl flex flex-col justify-between hover:shadow-2xs transition-shadow">
-                <div className="space-y-4">
-                  <span className="text-olive text-[10px] font-bold tracking-[0.14em] uppercase font-sans">
+              {/* Digital Business (Warm Stone bg) */}
+              <article className="p-7 bg-stone border border-stone-300/30 rounded-[16px] flex-1 flex flex-col justify-between text-left">
+                <div className="space-y-2">
+                  <span className="text-forest text-[10px] font-bold tracking-[0.14em] uppercase block font-sans">
                     Digital Business
                   </span>
-                  <h4 className="font-serif text-2xl lg:text-3xl text-charcoal font-medium leading-tight">
+                  <h4 className="font-serif text-[22px] md:text-[25px] text-charcoal font-medium leading-tight">
                     Kiến tạo doanh nghiệp số
                   </h4>
-                  <p className="text-body-text text-xs md:text-sm leading-relaxed">
-                    Độc lập kinh tế nhờ đúc kết tư duy nội dung, ứng dụng tự động hoá AI và xây dựng hệ thống website thương hiệu tinh nhuệ.
+                  <p className="text-text-soft text-xs leading-relaxed">
+                    Đồng hành thiết kế cấu trúc vận hành tinh gọn, tích hợp AI viết content và tối ưu hóa hệ thống website kinh doanh thong thả của riêng bạn.
                   </p>
                 </div>
 
                 <a 
-                  href="/academy/digital" 
+                  href="/academy/digital"
                   onClick={(e) => {
                     e.preventDefault();
                     setActiveTab("ho_so_phat_trien");
                     setHoSoActiveSubTab("dashboard");
                   }}
-                  className="font-semibold text-xs tracking-wider uppercase text-olive hover:text-olive-dark transition-colors mt-6 block border-t border-stone-100 pt-4"
+                  className="font-semibold text-xs tracking-wider uppercase text-forest hover:text-forest-deep transition-colors mt-5 block border-t border-stone-400/20 pt-3 text-left font-sans"
                 >
                   Khám phá chương trình →
                 </a>
               </article>
 
-              <article className="p-8 bg-white border border-border-custom rounded-xl flex flex-col justify-between hover:shadow-2xs transition-shadow">
-                <div className="space-y-4">
-                  <span className="text-olive text-[10px] font-bold tracking-[0.14em] uppercase font-sans">
+              {/* Self Development (Warm Rose bg) */}
+              <article className="p-7 bg-rose border border-stone-300/30 rounded-[16px] flex-1 flex flex-col justify-between text-left">
+                <div className="space-y-2">
+                  <span className="text-wine text-[10px] font-bold tracking-[0.14em] uppercase block font-sans">
                     Self Development
                   </span>
-                  <h4 className="font-serif text-2xl lg:text-3xl text-charcoal font-medium leading-tight">
-                    Hiểu mình sâu rộng
+                  <h4 className="font-serif text-[22px] md:text-[25px] text-[#422C28] font-medium leading-tight">
+                    Hiểu mình sâu hơn
                   </h4>
-                  <p className="text-body-text text-xs md:text-sm leading-relaxed">
-                    Các buổi rèn luyện chuyên sâu định hướng phong thái sống thong dong, giải mã rào cản nội tâm và thấu triệt nhân tướng học.
+                  <p className="text-text-soft text-xs leading-relaxed">
+                    Học cách đối diện chân thực với các nút thắt nội tâm, gieo nghi thức tỉnh thức ban mai hằng ngày và kiến tạo bản sắc tự tin.
                   </p>
                 </div>
 
                 <a 
-                  href="/academy/self-development" 
+                  href="/academy/self-development"
                   onClick={(e) => {
                     e.preventDefault();
                     setActiveTab("thu_vien_tri_thuc");
                   }}
-                  className="font-semibold text-xs tracking-wider uppercase text-olive hover:text-olive-dark transition-colors mt-6 block border-t border-stone-100 pt-4"
+                  className="font-semibold text-xs tracking-wider uppercase text-wine hover:text-wine/85 transition-colors mt-5 block border-t border-[#65443C]/10 pt-3 text-left font-sans"
                 >
                   Khám phá chương trình →
                 </a>
@@ -548,67 +511,69 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
             </div>
 
           </div>
+
         </div>
       </section>
 
       {/* ==========================================
-          05 SELECTED PRODUCTS (EBOOK IS HERE)
+          05 PRODUCTS: Deep Forest Background
          ========================================== */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-olive-dark text-white" id="products">
+      <section className="py-20 px-4 md:px-8 bg-forest-deep text-white border-y border-white/5" id="products">
         <div className="max-w-7xl mx-auto space-y-12">
+          
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 text-left">
-            <div className="space-y-3">
-              <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-[#D5C997] font-sans">
+            <div className="space-y-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-champagne font-sans block">
                 Selected by Vân Mộc
               </span>
-              <h2 className="font-serif font-medium text-4xl md:text-5xl lg:text-[56px] tracking-tight text-white leading-tight">
-                Sản phẩm<br />&amp; trải nghiệm.
+              <h2 className="font-serif font-medium text-[36px] md:text-[40px] lg:text-[52px] tracking-tight text-white leading-tight">
+                Sản phẩm &amp;<br />trải nghiệm.
               </h2>
             </div>
-            <p className="text-stone-300 text-sm md:text-base max-w-lg leading-relaxed">
-              Không phải mọi hành trình đều bắt đầu giống nhau. Có người bắt đầu từ một cuốn sách, một khóa học thực hành, một buổi trò chuyện sâu sắc hay một món trang sức chứa đựng rung động tự nhiên.
+            <p className="text-stone-300 text-xs md:text-sm max-w-md leading-relaxed">
+              Những phương tiện chạm chạm dịu lành — mở đầu tinh khôi qua một trang sách khai tâm, một khóa học định hình thần thái, hay một viên đá thanh khiết đồng tần số.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
             
-            {/* Ebook Card */}
-            <article className="p-6 rounded-xl border border-white/10 bg-white/[0.035] hover:bg-white/[0.065] transition-all duration-300 flex flex-col justify-between min-h-[360px]">
+            {/* Product 1 */}
+            <article className="p-5 rounded-[12px] border border-white/10 bg-white/[0.035] hover:bg-white/[0.06] transition-all duration-350 flex flex-col justify-between min-h-[320px]">
               <div className="space-y-4">
-                <span className="text-[#D6C697] text-[9px] font-bold tracking-[0.15em] uppercase">
+                <span className="text-champagne text-[9px] font-bold tracking-[0.15em] uppercase block font-sans">
                   Ebook
                 </span>
-                <h3 className="font-serif text-2xl lg:text-3xl font-medium tracking-tight leading-tight text-white">
+                <h3 className="font-serif text-[24px] lg:text-[27px] font-medium tracking-tight leading-snug text-white">
                   Hiểu Mình<br />Chữa Lành<br />Tỏa Sáng
                 </h3>
-                <p className="text-xs text-stone-300 leading-relaxed font-sans">
-                  Tuyển tập tri thức thâm thâm dẫn dắt bạn trở lại kết nối an toàn với em bé bên trong, giải toả bất an cảm xúc.
+                <p className="text-[11px] text-stone-300 leading-relaxed font-sans">
+                  Điểm chạm đầu tiên dịu dàng và nâng niu cho hành trình đối thoại và thấu hiểu chiều sâu linh hồn.
                 </p>
               </div>
 
               <a 
-                href="/ebook/hieu-minh" 
+                href="/ebook" 
                 onClick={(e) => {
                   e.preventDefault();
                   setIsEbookReaderOpen(true);
                 }}
-                className="text-[11px] uppercase tracking-wider font-semibold text-gold hover:text-white transition-colors mt-6 block pt-4 border-t border-white/5"
+                className="text-[10px] uppercase tracking-wider font-bold text-champagne hover:text-white transition-colors mt-6 block pt-3 border-t border-white/5 font-sans"
               >
-                Đọc Ebook →
+                Xem ebook →
               </a>
             </article>
 
-            {/* Course Card */}
-            <article className="p-6 rounded-xl border border-white/10 bg-white/[0.035] hover:bg-white/[0.065] transition-all duration-300 flex flex-col justify-between min-h-[360px]">
+            {/* Product 2 */}
+            <article className="p-5 rounded-[12px] border border-white/10 bg-white/[0.035] hover:bg-white/[0.06] transition-all duration-355 flex flex-col justify-between min-h-[320px]">
               <div className="space-y-4">
-                <span className="text-[#D6C697] text-[9px] font-bold tracking-[0.15em] uppercase">
+                <span className="text-champagne text-[9px] font-bold tracking-[0.15em] uppercase block font-sans">
                   Course
                 </span>
-                <h3 className="font-serif text-2xl lg:text-3xl font-medium tracking-tight leading-tight text-white">
+                <h3 className="font-serif text-[24px] lg:text-[27px] font-medium tracking-tight leading-snug text-white">
                   Makeup<br />Cá Nhân
                 </h3>
-                <p className="text-xs text-stone-300 leading-relaxed font-sans">
-                  Tìm hiểu kết cấu xương mặt, học cách phối màu phấn nền phù hợp, dựng phong cách nhã nhặn tự nhiên.
+                <p className="text-[11px] text-stone-300 leading-relaxed font-sans">
+                  Học trực tuyến bài bản để làm hòa với đường nét cơ thể và rèn sắc thái tỏa sương mai rạng ngời.
                 </p>
               </div>
 
@@ -617,24 +582,25 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveTab("store");
+                  setProductFilter("course");
                 }}
-                className="text-[11px] uppercase tracking-wider font-semibold text-gold hover:text-white transition-colors mt-6 block pt-4 border-t border-white/5"
+                className="text-[10px] uppercase tracking-wider font-bold text-champagne hover:text-white transition-colors mt-6 block pt-3 border-t border-white/5 font-sans"
               >
                 Xem khóa học →
               </a>
             </article>
 
-            {/* Coaching Card */}
-            <article className="p-6 rounded-xl border border-white/10 bg-white/[0.035] hover:bg-white/[0.065] transition-all duration-300 flex flex-col justify-between min-h-[360px]">
+            {/* Product 3 */}
+            <article className="p-5 rounded-[12px] border border-white/10 bg-white/[0.035] hover:bg-white/[0.06] transition-all duration-360 flex flex-col justify-between min-h-[320px]">
               <div className="space-y-4">
-                <span className="text-[#D6C697] text-[9px] font-bold tracking-[0.15em] uppercase">
+                <span className="text-champagne text-[9px] font-bold tracking-[0.15em] uppercase block font-sans">
                   Coaching
                 </span>
-                <h3 className="font-serif text-2xl lg:text-3xl font-medium tracking-tight leading-tight text-white">
+                <h3 className="font-serif text-[24px] lg:text-[27px] font-medium tracking-tight leading-snug text-white">
                   Human<br />Profile
                 </h3>
-                <p className="text-xs text-stone-300 leading-relaxed font-sans">
-                  Giải mã toàn diện các khuôn mẫu hành vi và kế hoạch sinh học qua tham vấn trực tiếp chuyên sâu.
+                <p className="text-[11px] text-stone-300 leading-relaxed font-sans">
+                  Hành trình soi chiếu và đo đạc trường sinh học, năng lượng luân xa để định vị nút thắt cuộc sống hằng ngày.
                 </p>
               </div>
 
@@ -644,23 +610,23 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                   e.preventDefault();
                   setActiveTab("coaching");
                 }}
-                className="text-[11px] uppercase tracking-wider font-semibold text-gold hover:text-white transition-colors mt-6 block pt-4 border-t border-white/5"
+                className="text-[10px] uppercase tracking-wider font-bold text-champagne hover:text-white transition-colors mt-6 block pt-3 border-t border-white/5 font-sans"
               >
                 Tìm hiểu →
               </a>
             </article>
 
-            {/* Jewelry Card */}
-            <article className="p-6 rounded-xl border border-white/10 bg-white/[0.035] hover:bg-white/[0.065] transition-all duration-300 flex flex-col justify-between min-h-[360px]">
+            {/* Product 4 */}
+            <article className="p-5 rounded-[12px] border border-white/10 bg-white/[0.035] hover:bg-white/[0.06] transition-all duration-365 flex flex-col justify-between min-h-[320px]">
               <div className="space-y-4">
-                <span className="text-[#D6C697] text-[9px] font-bold tracking-[0.15em] uppercase">
+                <span className="text-champagne text-[9px] font-bold tracking-[0.15em] uppercase block font-sans">
                   Jewelry
                 </span>
-                <h3 className="font-serif text-2xl lg:text-3xl font-medium tracking-tight leading-tight text-white">
+                <h3 className="font-serif text-[24px] lg:text-[27px] font-medium tracking-tight leading-snug text-white">
                   Vân Mộc<br />Collection
                 </h3>
-                <p className="text-xs text-stone-300 leading-relaxed font-sans">
-                  Tuyển chọn những mảnh đá tự nhiên độc bản mang năng lượng điều hòa mát mẻ cho trường sinh học của bạn.
+                <p className="text-[11px] text-stone-300 leading-relaxed font-sans">
+                  Trang sức ngọc trai nguyên bản từ Nhật Bản, bảo chứng của độ thanh khiết và trường tồn.
                 </p>
               </div>
 
@@ -671,94 +637,96 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                   setActiveTab("store");
                   setProductFilter("jewelry");
                 }}
-                className="text-[11px] uppercase tracking-wider font-semibold text-gold hover:text-white transition-colors mt-6 block pt-4 border-t border-white/5"
+                className="text-[10px] uppercase tracking-wider font-bold text-champagne hover:text-white transition-colors mt-6 block pt-3 border-t border-white/5 font-sans"
               >
                 Khám phá →
               </a>
             </article>
 
           </div>
+
         </div>
       </section>
 
       {/* ========================================================
-          06 DYNAMIC INTEGRATED EXPERIENCE: AI DIARY & LATEST JOURNAL
+          06 INTERACTIVE ENGAGEMENT: AI Diary, Daily Message (Quiet design)
          ======================================================== */}
-      <section className="py-16 md:py-24 px-4 md:px-8 border-b border-border-custom bg-ivory-light" id="goc-viet-nhat-ky">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-cream-light border-b border-stone-200/20" id="goc-viet-nhat-ky">
         <div className="max-w-5xl mx-auto space-y-12">
           
-          <div className="text-center max-w-2xl mx-auto space-y-4 flex flex-col items-center">
-            <span className="text-[10px] uppercase tracking-widest font-bold text-olive bg-olive/5 px-4 py-1.5 rounded-full inline-block font-sans">
-              Trải nghiệm tương tác trực tiếp
+          <div className="text-center max-w-xl mx-auto space-y-3 flex flex-col items-center">
+            <span className="text-[10px] uppercase tracking-widest font-bold text-forest bg-forest/5 px-4 py-1.5 rounded-full inline-block font-sans">
+              Chiêm nghiệm tương tác tinh tế
             </span>
-            <h3 className="text-3xl md:text-4xl font-serif text-[#292A26] tracking-tight">
-              Nhật Ký Tỉnh Thức &amp; Tri Kỷ AI
-            </h3>
-            <p className="text-body-text text-xs md:text-sm leading-relaxed font-sans">
-              Trút bỏ mọi phiền muộn, viết xuống trăn trở của bạn và để Vân Mộc AI lắng nghe, phản chiếu và vỗ về tâm hồn bạn bằng sự hiền hậu, cảm thông sâu sắc hằng ngày.
+            <h2 className="text-3xl md:text-4xl font-serif text-charcoal tracking-tight">
+              Góc Nhật Ký &amp; Định Tâm AI
+            </h2>
+            <p className="text-text-soft text-xs leading-relaxed font-sans">
+              Trút bớt gánh nặng tâm tư xáo động hằng ngày và đón nhận những lời soi chiếu thâm trầm, vỗ về nhẹ nhõm từ tri kỷ AI Vân Mộc.
             </p>
           </div>
 
-          {/* Daily Card Quick Drawer (Gieo Duyên) */}
-          <div className="bg-white rounded-xl p-6 md:p-8 border border-border-custom flex flex-col md:flex-row gap-8 items-center justify-between shadow-2xs max-w-4xl mx-auto text-left">
+          {/* Daily Card */}
+          <div className="bg-stone/80 rounded-[18px] p-6 md:p-8 border border-stone-300/10 flex flex-col md:flex-row gap-6 md:gap-8 items-center justify-between max-w-4xl mx-auto text-left">
             <div className="space-y-2 flex-1">
-              <span className="text-[9px] uppercase tracking-wider font-mono text-olive font-bold block">
-                Thông điệp định tâm mỗi ngày
+              <span className="text-[9px] uppercase tracking-wider font-mono text-forest font-bold block">
+                Nghi thức chánh niệm sớm mai
               </span>
-              <h4 className="font-serif text-xl text-stone-900 font-semibold">
-                Gieo duyên chánh niệm mỗi sớm mai
+              <h4 className="font-serif text-xl text-charcoal font-semibold">
+                Thông điệp nuôi dưỡng tâm thức
               </h4>
-              <p className="text-xs text-[#5E5D55] leading-relaxed max-w-md font-sans">
-                Nhấp nút bên cạnh để bốc một thông điệp định hướng tâm thức và nuôi dưỡng năng lượng tỉnh thức trong ngày.
+              <p className="text-xs text-text-soft leading-relaxed max-w-sm font-sans">
+                Chạm chuông chánh niệm để đón nhận ngẫu nhiên thông điệp lắng dịu, mở lối thong dong cho hành trình hôm nay.
               </p>
             </div>
 
             <div className="w-full md:w-auto shrink-0 flex flex-col gap-3 min-w-[280px]">
               {dailyCard ? (
-                <div className="bg-ivory-light border border-stone-200 p-5 rounded-lg space-y-2 text-left">
-                  <span className="text-[9px] font-bold text-amber-800 bg-amber-50 uppercase tracking-wide px-2 py-0.5 rounded">
-                    Chủ đề: {dailyCard.category}
+                <div className="bg-paper border border-stone-200 p-4 rounded-[12px] space-y-1.5 text-left">
+                  <span className="text-[8px] font-bold text-wine bg-[#EDE2DC] uppercase tracking-wide px-2 py-0.5 rounded font-sans inline-block">
+                    {dailyCard.category}
                   </span>
-                  <p className="font-serif italic text-stone-900 text-sm leading-relaxed">
+                  <p className="font-serif italic text-stone-900 text-xs leading-relaxed">
                     “{dailyCard.quote}”
                   </p>
-                  <p className="text-[10px] text-stone-500 leading-relaxed font-sans">
+                  <p className="text-[9px] text-stone-500 leading-relaxed font-sans">
                     {dailyCard.interpretation}
                   </p>
                 </div>
               ) : (
-                <div className="bg-ivory-light border border-dashed border-stone-300 p-5 rounded-lg text-stone-400 italic text-xs leading-relaxed text-center font-serif">
-                  “Đằng sau mọi cuồng quay của cuộc sống là một hiên nhà tĩnh lặng đang đợi bạn trở về.”
+                <div className="bg-cream-light border border-dashed border-stone-300/50 p-4 rounded-[12px] text-stone-400 italic text-[11px] leading-relaxed text-center font-serif">
+                  “Đằng sau mọi mệt mỏi bận rộn của cuộc sống là một hiên nhà tĩnh lặng vẫn luôn đợi bạn trở về.”
                 </div>
               )}
 
               <button
                 onClick={handleDailyCardPull}
                 disabled={isPullingCard}
-                className="w-full py-3 bg-olive hover:bg-olive-dark text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 font-sans"
+                className="w-full py-2.5 bg-forest hover:bg-forest-deep text-white rounded-full text-[10px] font-semibold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 font-sans shadow-none"
               >
                 {isPullingCard ? (
                   <>
-                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span>Đang kết nối...</span>
+                    <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Đang lắng nghe...</span>
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                    <span>Rút thông điệp ngẫu nhiên</span>
+                    <Sparkles className="w-3.5 h-3.5 text-champagne" />
+                    <span>Rút thông điệp định tâm</span>
                   </>
                 )}
               </button>
             </div>
           </div>
 
-          {/* AI Diary Box */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
-            {/* Input fields */}
-            <div className="lg:col-span-7 bg-white p-6 md:p-8 rounded-xl border border-border-custom space-y-6 text-left">
+          {/* Reflection fields */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start max-w-4xl mx-auto">
+            
+            {/* Write Form */}
+            <div className="lg:col-span-7 bg-white p-6 md:p-8 rounded-[18px] border border-stone-250/20 space-y-5 text-left">
               <div className="space-y-2">
-                <label className="block text-[10px] uppercase tracking-wider text-stone-500 font-bold font-sans">
-                  1. Chọn tâm trạng lúc này của bạn
+                <label className="block text-[10px] uppercase tracking-wider text-text-soft font-bold font-sans">
+                  1. Chọn cảm xúc lúc này
                 </label>
                 <div className="flex flex-wrap gap-1.5">
                   {["Bình yên", "Bất an", "Tổn thương", "Lòng hoài nghi", "Mệt mỏi", "Hy vọng"].map((m) => (
@@ -766,10 +734,10 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                       key={m}
                       type="button"
                       onClick={() => setMood(m)}
-                      className={`px-3 py-1.5 rounded-full text-xs transition-all duration-300 cursor-pointer ${
+                      className={`px-3 py-1 rounded-full text-[11px] transition-all duration-300 cursor-pointer ${
                         mood === m
-                          ? "bg-olive/10 text-olive font-semibold border border-olive/30"
-                          : "bg-ivory-light text-stone-600 border border-stone-200 hover:bg-stone-100"
+                          ? "bg-forest/10 text-forest font-semibold border border-forest/30"
+                          : "bg-cream-light text-stone-600 border border-stone-200/50 hover:bg-stone-100/50"
                       }`}
                     >
                       {m === "Bình yên" && "🍃 "}
@@ -785,92 +753,89 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
               </div>
 
               <div className="space-y-2">
-                <label className="block text-[10px] uppercase tracking-wider text-stone-500 font-bold font-sans">
-                  2. Chọn chủ đề phản chiếu
+                <label className="block text-[10px] uppercase tracking-wider text-text-soft font-bold font-sans">
+                  2. Chọn chủ đề soi chiếu
                 </label>
                 <select
                   value={selectedCategory}
                   onChange={(e: any) => setSelectedCategory(e.target.value)}
-                  className="w-full px-4 py-3 text-xs md:text-sm rounded-lg border border-stone-300 focus:outline-none focus:ring-1 focus:ring-olive bg-white text-stone-700 font-sans"
+                  className="w-full px-4 py-2.5 text-xs rounded-[8px] border border-stone-350 focus:outline-none focus:ring-1 focus:ring-forest bg-white text-stone-700 font-sans"
                 >
-                  <option value="hieu_minh">Hiểu Mình — Gốc rễ của mọi sự trưởng thành</option>
-                  <option value="chua_lanh">Chữa Lành — Quay về nâng niu tổn thương</option>
-                  <option value="toa_sang">Tỏa Sáng — Khí chất nguyên bản</option>
-                  <option value="nhan_tam">Rèn Luyện Nhân Tâm — Gốc vững một đời</option>
-                  <option value="moi_quan_he">Mối Quan Hệ — Tấm gương soi lại mình</option>
-                  <option value="goc_nhin_cuoc_song">Góc Nhìn Cuộc Sống — Người học bài học</option>
+                  <option value="hieu_minh">Hiểu Mình — Gốc rễ của tự do đích thực</option>
+                  <option value="chua_lanh">Chữa Lành — Quay về nâng niu vết thương lòng</option>
+                  <option value="toa_sang">Tỏa Sáng — Khí chất độc bản sâu sắc</option>
+                  <option value="nhan_tam">Rèn Luyện Nhân Tâm — Bền bỉ nâng đỡ nhân phẩm</option>
+                  <option value="moi_quan_he">Mối Quan Hệ — Tấm gương soi tỏ chính mình</option>
                 </select>
               </div>
 
               <div className="space-y-2">
-                <label className="block text-[10px] uppercase tracking-wider text-stone-500 font-bold font-sans">
-                  3. Viết trang nhật ký của bạn
+                <label className="block text-[10px] uppercase tracking-wider text-text-soft font-bold font-sans">
+                  3. Thổ lộ tâm sự
                 </label>
                 <textarea
-                  rows={5}
-                  placeholder="Viết bất kỳ suy nghĩ lộn xộn nào đang có trong đầu bạn... Bạn đang sợ gì? Đang mệt mỏi vì điều gì? Hay bài học nào bạn vừa ngộ ra?"
+                  rows={4}
+                  placeholder="Ghi xuống những lời trăn trở thầm kín nhất của lòng bạn hôm nay... Bạn bế tắc điều gì? Hay hạnh phúc nhỏ bé nào vừa khẽ chạm?"
                   value={journalInput}
                   onChange={(e) => setJournalInput(e.target.value)}
-                  className="w-full p-4 text-xs md:text-sm rounded-lg border border-stone-300 focus:outline-none focus:ring-1 focus:ring-olive bg-ivory/20 placeholder-stone-400 font-sans leading-relaxed"
+                  className="w-full p-4 text-xs rounded-[8px] border border-stone-350 focus:outline-none focus:ring-1 focus:ring-forest bg-cream-light/30 placeholder-stone-400 font-sans leading-relaxed text-charcoal"
                 />
               </div>
 
               <button
                 onClick={() => submitJournalReflection()}
                 disabled={isAiLoading || !journalInput.trim()}
-                className="w-full py-3.5 bg-olive text-white hover:bg-olive-dark rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer disabled:opacity-50 font-sans"
+                className="w-full py-2.5 bg-forest text-white hover:bg-forest-deep rounded-full text-[10px] font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer disabled:opacity-50 font-sans shadow-none"
               >
                 {isAiLoading ? (
                   <>
-                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span>Vân Mộc đang soi sáng...</span>
+                    <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Tri kỷ đang lắng nghe thâm trầm...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-3.5 h-3.5" /> Gửi gắm tâm sự để soi sáng
+                    <Send className="w-3.5 h-3.5" /> Gửi gắm để soi tỏ tâm tư
                   </>
                 )}
               </button>
             </div>
 
-            {/* AI Response output */}
-            <div className="lg:col-span-5 flex flex-col gap-6 h-full text-left">
-              <div className="bg-white p-6 md:p-8 rounded-xl border border-border-custom flex-1 flex flex-col justify-between relative overflow-hidden min-h-[300px]">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-stone-50 rounded-full blur-xl opacity-60"></div>
+            {/* AI Reply Output */}
+            <div className="lg:col-span-5 flex flex-col gap-5 h-full text-left">
+              <div className="bg-white p-6 md:p-7 rounded-[18px] border border-stone-250/20 flex-1 flex flex-col justify-between relative overflow-hidden min-h-[260px]">
                 <div className="z-10 flex-1 flex flex-col">
-                  <div className="flex items-center justify-between border-b border-stone-100 pb-3 mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-stone-700 flex items-center gap-1.5 font-sans">
-                      <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Tri kỷ Vân Mộc AI
+                  <div className="flex items-center justify-between border-b border-stone-100 pb-2.5 mb-3.5">
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-stone-700 flex items-center gap-1.5 font-sans">
+                      <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span> Tri kỷ Vân Mộc AI
                     </span>
-                    <span className="text-[9px] text-stone-400 font-mono">Lắng nghe thâm trầm</span>
                   </div>
 
-                  <div className="flex-1 flex flex-col justify-center min-h-[180px]">
+                  <div className="flex-1 flex flex-col justify-center min-h-[140px]">
                     {aiResponse ? (
-                      <p className="text-xs md:text-sm text-stone-700 leading-relaxed italic whitespace-pre-line font-serif">
+                      <p className="text-xs text-stone-700 leading-relaxed italic whitespace-pre-line font-serif">
                         “{aiResponse}”
                       </p>
                     ) : (
-                      <div className="text-center py-4 text-stone-400 text-xs italic font-serif">
-                        “Trang giấy đang mở rộng, Vân Mộc hiền hậu đón nhận mọi thổ lộ sâu thẳm nhất từ trái tâm của bạn.”
+                      <div className="text-center py-4 text-stone-400 text-[11px] italic font-serif">
+                        “Khi bạn sẵn sàng trút bớt những ưu tư nặng lòng xuống, Vân Mộc AI sẽ thầm thì lời vỗ về và phản chiếu êm dịu nhất dành riêng cho bạn.”
                       </div>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* History index logs */}
+              {/* Entries history */}
               {journalEntries.length > 0 && (
-                <div className="bg-white p-4 rounded-xl border border-border-custom max-h-[180px] overflow-y-auto space-y-2 text-left">
-                  <div className="flex justify-between items-center mb-2 border-b border-stone-100 pb-1">
-                    <span className="text-[9px] uppercase tracking-wider font-bold text-stone-500">Lịch sử nhật ký ({journalEntries.length})</span>
+                <div className="bg-white p-4 rounded-[12px] border border-stone-200/50 max-h-[150px] overflow-y-auto space-y-2">
+                  <div className="flex justify-between items-center mb-1.5 border-b border-stone-100 pb-1">
+                    <span className="text-[9px] uppercase tracking-wider font-bold text-stone-500">Nhật ký đã gieo ({journalEntries.length})</span>
                     <button
                       onClick={() => {
-                        if (confirm("Bạn có chắc muốn xóa lịch sử nhật ký tại máy này?")) saveJournalEntries([]);
+                        if (confirm("Xóa lịch sử tại thiết bị này?")) saveJournalEntries([]);
                       }}
                       className="text-[8px] text-stone-400 hover:text-red-500 uppercase transition-colors"
                     >
-                      Xóa tất cả
+                      Dọn dẹp
                     </button>
                   </div>
                   {journalEntries.slice(0, 3).map((entry) => (
@@ -882,105 +847,113 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
                         setMood(entry.mood);
                         setSelectedCategory(entry.category);
                       }}
-                      className="p-2.5 bg-ivory-light hover:bg-olive/5 rounded-lg border border-stone-100 transition-colors cursor-pointer text-left"
+                      className="p-2 bg-cream-light hover:bg-forest/5 rounded-[8px] border border-stone-100 transition-colors cursor-pointer"
                     >
-                      <div className="flex justify-between text-[9px] text-stone-400 font-mono">
+                      <div className="flex justify-between text-[8px] text-stone-400 font-mono">
                         <span>{entry.mood}</span>
                         <span>{entry.date.split(",")[1] || entry.date}</span>
                       </div>
-                      <p className="text-[10px] text-stone-700 font-sans line-clamp-1 mt-0.5 font-semibold">{entry.title}</p>
+                      <p className="text-[10px] text-stone-700 font-sans line-clamp-1 mt-0.5 font-medium">{entry.title}</p>
                     </div>
                   ))}
                 </div>
               )}
             </div>
+
           </div>
+
         </div>
       </section>
 
-      {/* ========================================================
-          07 LATEST CHIA SẺ FROM CMS/DATABASE
-         ======================================================== */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-ivory border-b border-border-custom" id="latest">
+      {/* ==========================================
+          07 EDITORIAL: Warm White Background
+         ========================================== */}
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-paper" id="editorial">
         <div className="max-w-7xl mx-auto space-y-12">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end text-left">
-            <div className="lg:col-span-6 space-y-3">
-              <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-olive font-sans">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end text-left">
+            <div className="lg:col-span-6 space-y-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-forest font-sans block">
                 From Vân Mộc
               </span>
-              <h2 className="font-serif font-medium text-4xl md:text-5xl lg:text-[56px] tracking-tight text-charcoal leading-tight">
+              <h2 className="font-serif font-medium text-[36px] md:text-[40px] lg:text-[50px] tracking-tight text-charcoal leading-tight">
                 Những điều<br />đang được chia sẻ.
               </h2>
             </div>
             <div className="lg:col-span-6">
-              <p className="text-body-text text-sm md:text-base leading-relaxed max-w-xl">
-                Những bài viết mới đầy cảm quan, chia sẻ kinh nghiệm rèn mình, đúc rút tri thức doanh nghiệp số và câu chuyện ngọc trai Japan.
+              <p className="text-text-soft text-xs md:text-sm leading-relaxed max-w-lg">
+                Những tản văn thâm trầm, kinh nghiệm thực chiến đúc kết và góc nhìn dịu dàng tinh chọn từ hiên nhà Vân Mộc.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             
-            {/* Topic 1 */}
-            <article className="rounded-xl overflow-hidden bg-white border border-border-custom hover:shadow-2xs transition-all duration-300 text-left">
-              <div className="aspect-video bg-stone-100 overflow-hidden relative">
+            {/* Article 1: Vườn (article-vuon.jpg) */}
+            <article className="group text-left border-b border-stone-200/40 pb-6">
+              <div className="aspect-[4/3] rounded-[12px] overflow-hidden relative bg-stone shrink-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=400" 
-                  alt="Hiểu mình thực sự" 
-                  className="w-full h-full object-cover"
+                  src="/images/article-vuon.jpg" 
+                  alt="Bài viết Vườn Vân Mộc - Chánh niệm" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-101"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="p-6 space-y-3">
-                <span className="text-olive text-[10px] font-bold tracking-[0.12em] uppercase font-sans">Vườn Vân Mộc</span>
-                <h3 className="font-serif text-xl font-medium text-charcoal leading-snug">
+              <div className="py-4 space-y-1.5">
+                <span className="text-forest text-[9px] font-bold tracking-[0.12em] uppercase font-sans block">
+                  Vườn Vân Mộc
+                </span>
+                <h3 className="font-serif text-[22px] font-medium text-charcoal leading-snug group-hover:text-forest transition-colors">
                   Hiểu mình không chỉ là biết mình thích gì
                 </h3>
-                <p className="text-xs text-body-text leading-relaxed font-sans">
-                  Đi sâu hơn từ những phản ứng tâm trạng, nhận thức các bài học gốc rễ, và nuôi dưỡng thế giới nhân sinh trọn vẹn hơn.
+                <p className="text-xs text-text-soft leading-relaxed font-sans">
+                  Sự đối diện sâu sắc vượt qua lớp vỏ bọc sở thích, chạm đến nhu cầu thầm kín nhất của linh hồn.
                 </p>
               </div>
             </article>
 
-            {/* Topic 2 */}
-            <article className="rounded-xl overflow-hidden bg-white border border-border-custom hover:shadow-2xs transition-all duration-300 text-left">
-              <div className="aspect-video bg-stone-100 overflow-hidden relative">
+            {/* Article 2: Mộc Bản (article-mocban.jpg) */}
+            <article className="group text-left border-b border-stone-200/40 pb-6">
+              <div className="aspect-[4/3] rounded-[12px] overflow-hidden relative bg-stone shrink-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=400" 
-                  alt="Doanh nghiệp số" 
-                  className="w-full h-full object-cover"
+                  src="/images/article-mocban.jpg" 
+                  alt="Bài viết Mộc Bản - Sách vở thong thong" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-101"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="p-6 space-y-3">
-                <span className="text-olive text-[10px] font-bold tracking-[0.12em] uppercase font-sans">Mộc Bản</span>
-                <h3 className="font-serif text-xl font-medium text-charcoal leading-snug">
-                  Xây một doanh nghiệp số từ những gì mình biết
+              <div className="py-4 space-y-1.5">
+                <span className="text-forest text-[9px] font-bold tracking-[0.12em] uppercase font-sans block">
+                  Mộc Bản
+                </span>
+                <h3 className="font-serif text-[22px] font-medium text-charcoal leading-snug group-hover:text-forest transition-colors">
+                  Xây một doanh nghiệp số từ điều mình biết
                 </h3>
-                <p className="text-xs text-body-text leading-relaxed font-sans">
-                  Những ghi chép thực tế tinh gọn về content, AI hỗ trợ, dựng phác thảo thương hiệu cá nhân bền vững qua năm tháng.
+                <p className="text-xs text-text-soft leading-relaxed font-sans">
+                  Ghi chép thực tế về tiến trình đóng gói tri thức cá nhân thành hệ thống kinh doanh thong thả, thăng hoa.
                 </p>
               </div>
             </article>
 
-            {/* Topic 3 */}
-            <article className="rounded-xl overflow-hidden bg-white border border-border-custom hover:shadow-2xs transition-all duration-300 text-left">
-              <div className="aspect-video bg-stone-100 overflow-hidden relative">
+            {/* Article 3: Jewelry (article-jewelry.jpg) */}
+            <article className="group text-left border-b border-stone-200/40 pb-6">
+              <div className="aspect-[4/3] rounded-[12px] overflow-hidden relative bg-stone shrink-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1515688594390-b649af70d282?auto=format&fit=crop&q=80&w=400" 
-                  alt="Jewelry Japan" 
-                  className="w-full h-full object-cover"
+                  src="/images/article-jewelry.jpg" 
+                  alt="Bài viết Jewelry - Chi tiết ngọc trai" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-101"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <div className="p-6 space-y-3">
-                <span className="text-olive text-[10px] font-bold tracking-[0.12em] uppercase font-sans">Vân Mộc Jewelry</span>
-                <h3 className="font-serif text-xl font-medium text-charcoal leading-snug">
+              <div className="py-4 space-y-1.5">
+                <span className="text-wine text-[9px] font-bold tracking-[0.12em] uppercase font-sans block">
+                  Vân Mộc Jewelry
+                </span>
+                <h3 className="font-serif text-[22px] font-medium text-charcoal leading-snug group-hover:text-forest transition-colors">
                   Trang sức đẹp bắt đầu từ việc hiểu chất liệu
                 </h3>
-                <p className="text-xs text-body-text leading-relaxed font-sans">
-                  Những bài học thẩm mỹ giản dị qua lớp bóng xà cừ Akoya Nhật Bản, tinh thể đá quý và trang sức chế tác vintage.
+                <p className="text-xs text-text-soft leading-relaxed font-sans">
+                  Ngọc trai tự nhiên và nghệ thuật chế tác Nhật Bản mang trong mình tần số kiêu hãnh và bình an vô cực.
                 </p>
               </div>
             </article>
@@ -991,56 +964,70 @@ export const HomepageView: React.FC<HomepageViewProps> = ({
       </section>
 
       {/* ==========================================
-          08 START JOURNEY
+          08 FINAL CTA (JOURNEY): Forest to Wine Gradient
          ========================================== */}
-      <section className="py-12 md:py-20 px-4 md:px-8" id="start-journey">
-        <div className="max-w-5xl mx-auto bg-ivory-light border border-border-custom rounded-xl p-8 md:p-16 text-center">
-          <div className="max-w-2xl mx-auto space-y-6 flex flex-col items-center">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-bold text-olive font-sans">
+      <section className="py-0 px-4 md:px-8 bg-paper" id="journey">
+        <div className="max-w-7xl mx-auto pb-16">
+          <div className="rounded-[20px] bg-gradient-to-br from-forest via-[#46503A] to-wine text-white p-8 md:p-14 text-center space-y-5 relative overflow-hidden shadow-none">
+            
+            <span className="text-champagne text-[11px] font-bold uppercase tracking-[0.18em] block">
               Start Your Journey
             </span>
-            <h2 className="font-serif font-medium text-3xl md:text-4xl lg:text-5xl tracking-tight text-charcoal leading-tight">
+
+            <h2 className="font-serif font-medium text-[34px] md:text-[38px] lg:text-[50px] leading-tight text-white tracking-tight">
               Bạn muốn bắt đầu<br />từ đâu?
             </h2>
-            <p className="text-body-text text-xs md:text-sm leading-relaxed max-w-md">
-              Không có một hành trình chung phù hợp cho tất cả mọi người. Hãy xuất phát từ điều bạn muốn khám phá hoặc thay đổi nhất tại thời điểm này.
+
+            <p className="text-stone-300 text-xs md:text-sm max-w-xl mx-auto leading-relaxed">
+              Hãy bước vào cánh cửa phù hợp nhất với giai đoạn hiện tại của cuộc sống bạn. Vân Mộc luôn đón chào bạn thong dong gieo bước.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 w-full max-w-xl">
-              <button 
-                onClick={() => setActiveTab("thu_vien_tri_thuc")}
-                className="min-h-[50px] px-6 rounded-full bg-olive hover:bg-olive-dark text-white font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer font-sans"
-              >
-                Tôi muốn hiểu mình
-              </button>
-              <button 
-                onClick={() => {
-                  setActiveTab("store");
-                  setProductFilter("course");
+            <div className="flex flex-wrap justify-center gap-3 pt-5 max-w-2xl mx-auto">
+              <a 
+                href="/vuon" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("thu_vien_tri_thuc");
                 }}
-                className="min-h-[50px] px-6 rounded-full border border-olive text-olive hover:bg-olive hover:text-white font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer font-sans"
+                className="min-h-[44px] px-6 rounded-full border border-white/20 hover:border-white text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:bg-white hover:text-forest"
               >
-                Tôi muốn đẹp hơn
-              </button>
-              <button 
-                onClick={() => {
+                Hiểu mình
+              </a>
+              <a 
+                href="/moc-ban" 
+                onClick={(e) => {
+                  e.preventDefault();
                   setActiveTab("ho_so_phat_trien");
                   setHoSoActiveSubTab("dashboard");
                 }}
-                className="min-h-[50px] px-6 rounded-full border border-olive text-olive hover:bg-olive hover:text-white font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer font-sans"
+                className="min-h-[44px] px-6 rounded-full border border-white/20 hover:border-white text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:bg-white hover:text-forest"
               >
-                Tôi muốn xây năng lực
-              </button>
-              <button 
-                onClick={() => {
+                Xây năng lực
+              </a>
+              <a 
+                href="/academy/makeup" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveTab("store");
+                  setProductFilter("course");
+                }}
+                className="min-h-[44px] px-6 rounded-full border border-white/20 hover:border-white text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:bg-white hover:text-forest"
+              >
+                Làm đẹp
+              </a>
+              <a 
+                href="/jewelry" 
+                onClick={(e) => {
+                  e.preventDefault();
                   setActiveTab("store");
                   setProductFilter("jewelry");
                 }}
-                className="min-h-[50px] px-6 rounded-full border border-olive text-olive hover:bg-olive hover:text-white font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer font-sans"
+                className="min-h-[44px] px-6 rounded-full border border-white/20 hover:border-white text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center transition-all duration-300 hover:bg-white hover:text-forest"
               >
-                Tôi yêu trang sức &amp; phong cách
-              </button>
+                Trang sức &amp; Phong cách
+              </a>
             </div>
+
           </div>
         </div>
       </section>

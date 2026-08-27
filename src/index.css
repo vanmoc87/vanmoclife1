@@ -1,20 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Serif+Display:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Noto Serif Display", ui-serif, Georgia, serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
   
-  --color-olive: #596044;
-  --color-olive-dark: #414733;
-  --color-olive-soft: #7C8463;
-  --color-sage: #A7AA91;
-  --color-gold: #B7A16A;
-  --color-gold-light: #D5C99F;
-  --color-charcoal: #292A26;
-  --color-ivory: #F5F2EA;
-  --color-ivory-light: #FBFAF7;
-  --color-brand-bg: #F5F2EA;
-  --color-brand-bg-soft: #FBFAF7;
-  --color-border-custom: #DDD8CD;
+  --color-cream: #F4EFE6;
+  --color-cream-light: #FBF8F2;
+  --color-paper: #FFFEFB;
+  --color-forest: #3D4733;
+  --color-forest-soft: #586348;
+  --color-forest-deep: #30392B;
+  --color-ink: #242620;
+  --color-bronze: #B28755;
+  --color-champagne: #C7AA73;
+  --color-wine: #65443C;
+  --color-rose: #D7C2B4;
+  --color-stone: #E5DED2;
+  --color-sand-light: #EBE4D8;
+  
+  --color-olive: #3D4733;
+  --color-olive-dark: #30392B;
+  --color-olive-soft: #586348;
+  --color-sage: #E5DED2;
+  --color-gold: #C7AA73;
+  --color-gold-light: #EBE4D8;
+  --color-charcoal: #242620;
+  --color-ivory: #F4EFE6;
+  --color-ivory-light: #FBF8F2;
+  --color-brand-bg: #F4EFE6;
+  --color-brand-bg-soft: #FBF8F2;
+  --color-border-custom: rgba(73, 68, 57, 0.14);
 }
